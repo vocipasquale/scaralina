@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.google.gson.Gson
 import com.pv.scaralina.R
 import com.pv.scaralina.ScaralinaApp
 import com.pv.scaralina.ui.sigla.SiglaActivity
@@ -185,37 +186,10 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-//    private suspend fun cercaParolaOnline(parola: String): String = withContext(Dispatchers.IO) {
-//        try {
-//            val okHttpClient = okhttp3.OkHttpClient.Builder()
-//                .addInterceptor { chain ->
-//                    val request = chain.request().newBuilder()
-//                        .header("User-Agent", "Mozilla/5.0 (Android) ScaralinaApp")
-//                        .build()
-//
-//                    Log.i("cercaParolaOnline", "Request URL: ${request.url()}")
-//
-//                    chain.proceed(request)
-//                }
-//                .build()
-//
-//            val retrofit = Retrofit.Builder()
-//                .baseUrl("https://it.wiktionary.org/")
-//                .client(okHttpClient) // <-- usa il client custom
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build()
-//
-//            val service = retrofit.create(WiktionaryApi::class.java)
-//            val response = service.getDefinizione(parola)
-//
-//            val pages = ((response["query"] as? Map<*, *>)?.get("pages") as? Map<*, *>) ?: emptyMap<Any, Any>()
-//            val firstPage = pages.values.firstOrNull() as? Map<*, *>
-//            firstPage?.get("extract") as? String ?: ""
-//        } catch (e: Exception) {
-//            Log.e("ricerca online", "errore", e)
-//            e.cause?.toString() ?: e.toString()
-//        }
-//    }
+    private suspend fun cercaParolaOnlineTest(parola: String): String = withContext(Dispatchers.IO) {
+        val responseTrovata = "{\"batchcomplete\":\"\",\"query\":{\"pages\":{\"742\":{\"pageid\":742,\"ns\":0,\"title\":\"casa\",\"extract\":\"\"}}}}"
+        testParsing(responseTrovata)
+    }
 
     private suspend fun cercaParolaOnline(parola: String): String = withContext(Dispatchers.IO) {
         try {
@@ -245,12 +219,13 @@ class MainActivity : AppCompatActivity() {
             val pages = query?.get("pages") as? Map<*, *>
             val firstPage = pages?.values?.firstOrNull() as? Map<*, *>
 
-            if (firstPage == null) {
-                "Parola non trovata"
-            } else if (firstPage.containsKey("missing")) {
-                "Parola non trovata"
-            } else {
-                firstPage["extract"] as? String ?: ""
+            when {
+                firstPage == null -> "Parola non trovata"
+                firstPage.containsKey("missing") -> "Parola non trovata"
+                else -> {
+                    val extract = firstPage["extract"] as? String
+                    if (extract.isNullOrBlank()) "Parola trovata, ma senza definizione" else extract
+                }
             }
         } catch (e: Exception) {
             Log.e("ricerca online", "errore", e)
@@ -259,5 +234,26 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+
+    fun testParsing(jsonString: String): String {
+        val gson = Gson()
+        val map: Map<String, Any> = gson.fromJson(jsonString, Map::class.java) as Map<String, Any>
+        return parseWiktionaryResponse(map)
+    }
+
+    fun parseWiktionaryResponse(json: Map<String, Any>): String {
+        val query = json["query"] as? Map<*, *>
+        val pages = query?.get("pages") as? Map<*, *>
+        val firstPage = pages?.values?.firstOrNull() as? Map<*, *>
+
+        return when {
+            firstPage == null -> "Parola non trovata"
+            firstPage.containsKey("missing") -> "Parola non trovata"
+            else -> {
+                val extract = firstPage["extract"] as? String
+                if (extract.isNullOrBlank()) "Parola trovata, ma senza definizione" else extract
+            }
+        }
+    }
 
 }
