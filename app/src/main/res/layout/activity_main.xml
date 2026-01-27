@@ -1,0 +1,98 @@
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <!-- Campo parola con icona lente -->
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilParola"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Inserisci parola"
+            app:endIconMode="custom"
+            app:endIconDrawable="@drawable/ic_search_24"
+            app:endIconContentDescription="Cerca">
+
+        <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etParola"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionSearch"
+                android:inputType="text"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- TextView per definizione o messaggi -->
+    <TextView
+            android:id="@+id/tvDefinizione"
+            android:text=""
+            android:textSize="36sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:gravity="center"/>
+
+
+
+    <!-- Durata timer -->
+    <TextView
+            android:id="@+id/tvDurata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Durata: 3 min"
+            android:paddingTop="16dp"
+            android:textSize="16sp"
+            android:gravity="center"/>
+
+    <SeekBar
+            android:id="@+id/sbDurataTimer"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:max="9"
+            android:progress="2"/>
+
+    <!-- TextView per definizione o messaggi -->
+    <TextView
+            android:id="@+id/tvContatore"
+            android:text=""
+            android:textSize="36sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:gravity="center"/>
+
+    <!-- Layout orizzontale per Start/Stop + Reset -->
+    <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp">
+
+        <Button
+                android:id="@+id/btnTimer"
+                android:text="Start/Stop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <Button
+                android:id="@+id/btnResetTimer"
+                android:text="Reset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"/>
+    </LinearLayout>
+
+    <!-- Bottone SiglaActivity -->
+    <Button
+            android:id="@+id/btnSiglaActivity"
+            android:text="Sigle e altro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"/>
+</LinearLayout>
+
