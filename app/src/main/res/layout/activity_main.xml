@@ -5,7 +5,8 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:background="#F5F5F5">
 
     <!-- ================= BLOCCO ALTO ================= -->
     <LinearLayout
@@ -29,6 +30,8 @@
                     android:layout_height="48dp"
                     android:layout_marginEnd="8dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="8dp"
+                    app:tint="@color/purple_500"
                     android:src="@drawable/ink_eraser_24"
                     android:contentDescription="Pulisci"/>
 
@@ -44,6 +47,7 @@
                         android:id="@+id/etParola"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textSize="18sp"
                         android:imeOptions="actionSearch"
                         android:inputType="text"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -55,6 +59,8 @@
                     android:layout_height="48dp"
                     android:layout_marginStart="8dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="8dp"
+                    app:tint="@color/purple_500"
                     android:src="@drawable/ic_search_24"
                     android:contentDescription="Cerca"/>
         </LinearLayout>
@@ -65,20 +71,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="16dp"
-                android:textSize="18sp"
+                android:textSize="16sp"
+                android:textColor="@color/black"
                 android:gravity="center"/>
 
+        <!-- Emoji feedback -->
         <ImageView
                 android:id="@+id/ivDefinizione"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
                 android:layout_gravity="center"
                 android:paddingTop="8dp"
                 android:visibility="gone"
                 android:contentDescription="Emoji risultato"/>
-
     </LinearLayout>
-
 
     <!-- ================= BLOCCO CENTRALE ================= -->
     <LinearLayout
@@ -93,7 +99,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Durata: 3 min"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:textColor="@color/black"/>
 
         <SeekBar
                 android:id="@+id/sbDurataTimer"
@@ -107,6 +114,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="36sp"
+                android:textColor="@color/black"
                 android:paddingTop="16dp"
                 android:gravity="center"/>
 
@@ -121,14 +129,22 @@
                     android:id="@+id/btnTimer"
                     android:text="Start/Stop"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_button"
+                    android:textColor="@android:color/white"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="8dp"/>
 
             <Button
                     android:id="@+id/btnResetTimer"
                     android:text="Reset"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"/>
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/bg_button"
+                    android:textColor="@android:color/white"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="8dp"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -138,13 +154,17 @@
             android:gravity="bottom|center_horizontal"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:paddingBottom="16dp">
 
         <Button
                 android:id="@+id/btnSiglaActivity"
                 android:text="Elenco Sigle"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_button"
+                android:textColor="@android:color/white"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"/>
     </LinearLayout>
-
 </LinearLayout>

@@ -57,7 +57,6 @@ class SiglaActivity : AppCompatActivity() {
                 }
             }
         )
-
         rvTermini.layoutManager = LinearLayoutManager(this)
         rvTermini.adapter = termAdapter
     }
@@ -67,14 +66,12 @@ class SiglaActivity : AppCompatActivity() {
     // -----------------------------
     private fun creaIndiceAlfabetico() {
 
-        // Chip "TUTTE"
         val chipTutte = creaChip("TUTTE") {
             loadTermini()
         }
         chipTutte.isChecked = true
         chipGroupIndice.addView(chipTutte)
 
-        // Chip A–Z
         ('A'..'Z').forEach { lettera ->
             chipGroupIndice.addView(
                 creaChip(lettera.toString()) {
@@ -90,7 +87,29 @@ class SiglaActivity : AppCompatActivity() {
             isCheckable = true
             isClickable = true
             setOnClickListener { onClick() }
+
+            // 🔥 RIMOZIONE TOTALE DELLA "PILLOLA"
+            background = null
+            setBackgroundColor(android.graphics.Color.TRANSPARENT)
+
+            // Evita altezze minime Material
+            minHeight = 0
+            minimumHeight = 0
+
+            // Niente effetti grafici
+            isCloseIconVisible = false
+            rippleColor = null
+            elevation = 0f
+
+            // Testo coerente
+            setTextColor(resources.getColor(R.color.black))
+
+            // Padding manuale (solo area touch)
+            setPadding(12, 8, 12, 8)
         }
+
+
+
 
     private fun filtraPerLettera(lettera: String) {
         lifecycleScope.launch {

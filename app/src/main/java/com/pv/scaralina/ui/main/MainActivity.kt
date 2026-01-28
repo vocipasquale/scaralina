@@ -7,11 +7,7 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.SeekBar
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputEditText
@@ -21,12 +17,16 @@ import com.pv.scaralina.R
 import com.pv.scaralina.ScaralinaApp
 import com.pv.scaralina.ui.sigla.SiglaActivity
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
+
+
+//const val PAROLA_NON_TROVATA = "Parola non trovata"
+const val PAROLA_TROVATA_SNZ_DEF = "Parola trovata, ma senza definizione"
 
 class MainActivity : AppCompatActivity() {
 
@@ -36,12 +36,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var etParola: TextInputEditText
     private lateinit var tvContatore: TextView
     private lateinit var tvDefinizione: TextView
+    private lateinit var ivDefinizione: ImageView
     private lateinit var btnStartStop: Button
     private lateinit var btnReset: Button
     private lateinit var seekBarDurata: SeekBar
     private lateinit var tvDurata: TextView
     private lateinit var btnSiglaActivity: Button
-    private lateinit var ivDefinizione: ImageView
 
     private var timer: CountDownTimer? = null
     private var isRunning = false
@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity() {
     private var selectedMinutes = 3L
 
     private val database by lazy { (application as ScaralinaApp).database }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,13 +64,12 @@ class MainActivity : AppCompatActivity() {
         etParola = findViewById(R.id.etParola)
         tvContatore = findViewById(R.id.tvContatore)
         tvDefinizione = findViewById(R.id.tvDefinizione)
+        ivDefinizione = findViewById(R.id.ivDefinizione)
         btnStartStop = findViewById(R.id.btnTimer)
         btnReset = findViewById(R.id.btnResetTimer)
         seekBarDurata = findViewById(R.id.sbDurataTimer)
         tvDurata = findViewById(R.id.tvDurata)
         btnSiglaActivity = findViewById(R.id.btnSiglaActivity)
-        ivDefinizione = findViewById(R.id.ivDefinizione)
-
 
         // ===========================
         // PULISCI CAMPI
@@ -88,6 +88,8 @@ class MainActivity : AppCompatActivity() {
             val parola = etParola.text.toString().trim()
             if (parola.isEmpty()) {
                 tvDefinizione.text = "Inserisci una parola"
+                ivDefinizione.setImageResource(R.drawable.ic_infelice_96)
+                ivDefinizione.visibility = View.VISIBLE
                 return@setOnClickListener
             }
 
@@ -101,11 +103,11 @@ class MainActivity : AppCompatActivity() {
                 if (definizione.isBlank()) {
                     definizione = "Parola non trovata"
                     ivDefinizione.setImageResource(R.drawable.ic_infelice_96)
-                    ivDefinizione.visibility = View.VISIBLE
+                } else {
+                    ivDefinizione.setImageResource(R.drawable.ic_felice_96)
                 }
 
                 tvDefinizione.text = definizione
-                ivDefinizione.setImageResource(R.drawable.ic_felice_96)
                 ivDefinizione.visibility = View.VISIBLE
             }
         }
@@ -236,17 +238,18 @@ class MainActivity : AppCompatActivity() {
 
             val service = retrofit.create(WiktionaryApi::class.java)
             val response = service.getDefinizione(parola)
+            //val response = testParsing("{\"batchcomplete\":\"\",\"query\":{\"pages\":{\"74752\":{\"pageid\":74752,\"ns\":0,\"title\":\"seno\",\"extract\":\"definizione definizione definizione\"}}}}")
 
             val query = response["query"] as? Map<*, *>
             val pages = query?.get("pages") as? Map<*, *>
             val firstPage = pages?.values?.firstOrNull() as? Map<*, *>
 
             when {
-                firstPage == null -> "Parola non trovata"
-                firstPage.containsKey("missing") -> "Parola non trovata"
+                firstPage == null -> "" //PAROLA_NON_TROVATA
+                firstPage.containsKey("missing") -> "" //PAROLA_NON_TROVATA
                 else -> {
                     val extract = firstPage["extract"] as? String
-                    if (extract.isNullOrBlank()) "Parola trovata, ma senza definizione" else extract
+                    if (extract.isNullOrBlank()) PAROLA_TROVATA_SNZ_DEF else extract
                 }
             }
         } catch (e: Exception) {
@@ -256,10 +259,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Per test JSON
-    fun testParsing(jsonString: String): String {
+    fun testParsing(jsonString: String): Map<String, Any> {
         val gson = Gson()
         val map: Map<String, Any> = gson.fromJson(jsonString, Map::class.java) as Map<String, Any>
-        return parseWiktionaryResponse(map)
+        return map //parseWiktionaryResponse(map)
     }
 
     fun parseWiktionaryResponse(json: Map<String, Any>): String {
