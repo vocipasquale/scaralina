@@ -6,7 +6,10 @@ import android.media.ToneGenerator
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
+import android.view.View
 import android.widget.Button
+import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -27,6 +30,8 @@ import retrofit2.http.Query
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var btnClear: ImageButton
+    private lateinit var btnSearch: ImageButton
     private lateinit var tilParola: TextInputLayout
     private lateinit var etParola: TextInputEditText
     private lateinit var tvContatore: TextView
@@ -36,6 +41,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var seekBarDurata: SeekBar
     private lateinit var tvDurata: TextView
     private lateinit var btnSiglaActivity: Button
+    private lateinit var ivDefinizione: ImageView
 
     private var timer: CountDownTimer? = null
     private var isRunning = false
@@ -48,6 +54,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // ===========================
+        // INIT VIEW
+        // ===========================
+        btnClear = findViewById(R.id.btnClear)
+        btnSearch = findViewById(R.id.btnSearch)
         tilParola = findViewById(R.id.tilParola)
         etParola = findViewById(R.id.etParola)
         tvContatore = findViewById(R.id.tvContatore)
@@ -57,14 +68,27 @@ class MainActivity : AppCompatActivity() {
         seekBarDurata = findViewById(R.id.sbDurataTimer)
         tvDurata = findViewById(R.id.tvDurata)
         btnSiglaActivity = findViewById(R.id.btnSiglaActivity)
+        ivDefinizione = findViewById(R.id.ivDefinizione)
 
-        // 🔍 Cerca parola
-        tilParola.setEndIconOnClickListener {
+
+        // ===========================
+        // PULISCI CAMPI
+        // ===========================
+        btnClear.setOnClickListener {
+            etParola.text?.clear()
+            tvDefinizione.text = ""
+            etParola.clearFocus()
+            ivDefinizione.visibility = View.GONE
+        }
+
+        // ===========================
+        // CERCA PAROLA
+        // ===========================
+        btnSearch.setOnClickListener {
             val parola = etParola.text.toString().trim()
-
             if (parola.isEmpty()) {
                 tvDefinizione.text = "Inserisci una parola"
-                return@setEndIconOnClickListener
+                return@setOnClickListener
             }
 
             lifecycleScope.launch {
@@ -76,13 +100,19 @@ class MainActivity : AppCompatActivity() {
 
                 if (definizione.isBlank()) {
                     definizione = "Parola non trovata"
+                    ivDefinizione.setImageResource(R.drawable.ic_infelice_96)
+                    ivDefinizione.visibility = View.VISIBLE
                 }
 
                 tvDefinizione.text = definizione
+                ivDefinizione.setImageResource(R.drawable.ic_felice_96)
+                ivDefinizione.visibility = View.VISIBLE
             }
         }
 
-        // SeekBar
+        // ===========================
+        // SEEKBAR DURATA
+        // ===========================
         seekBarDurata.max = 10
         seekBarDurata.progress = selectedMinutes.toInt()
         tvDurata.text = "$selectedMinutes min"
@@ -96,16 +126,20 @@ class MainActivity : AppCompatActivity() {
                     updateTimerText(remainingMillis)
                 }
             }
+
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
 
-        btnStartStop.setOnClickListener {
-            if (isRunning) pauseTimer() else startTimer()
-        }
-
+        // ===========================
+        // TIMER BUTTONS
+        // ===========================
+        btnStartStop.setOnClickListener { if (isRunning) pauseTimer() else startTimer() }
         btnReset.setOnClickListener { resetTimer() }
 
+        // ===========================
+        // NAVIGAZIONE SIGLA ACTIVITY
+        // ===========================
         btnSiglaActivity.setOnClickListener {
             startActivity(Intent(this, SiglaActivity::class.java))
         }
@@ -114,10 +148,9 @@ class MainActivity : AppCompatActivity() {
         updateTimerText(remainingMillis)
     }
 
-    // =========================
-    // TIMER
-    // =========================
-
+    // ===========================
+    // TIMER FUNZIONI
+    // ===========================
     private fun startTimer() {
         timer = object : CountDownTimer(remainingMillis, 1000) {
             override fun onTick(millisUntilFinished: Long) {
@@ -165,10 +198,9 @@ class MainActivity : AppCompatActivity() {
         tvContatore.text = String.format("%02d:%02d", minutes, seconds)
     }
 
-    // =========================
+    // ===========================
     // STORAGE
-    // =========================
-
+    // ===========================
     private suspend fun cercaParolaInStorage(parola: String): String =
         withContext(Dispatchers.IO) {
             database.termDao().getByParola(parola)
@@ -176,19 +208,12 @@ class MainActivity : AppCompatActivity() {
                 ?: ""
         }
 
-    // =========================
+    // ===========================
     // NETWORK
-    // =========================
-
+    // ===========================
     interface WiktionaryApi {
         @GET("w/api.php?action=query&format=json&prop=extracts&exintro=&explaintext=")
         suspend fun getDefinizione(@Query("titles") titolo: String): Map<String, Any>
-    }
-
-
-    private suspend fun cercaParolaOnlineTest(parola: String): String = withContext(Dispatchers.IO) {
-        val responseTrovata = "{\"batchcomplete\":\"\",\"query\":{\"pages\":{\"742\":{\"pageid\":742,\"ns\":0,\"title\":\"casa\",\"extract\":\"\"}}}}"
-        testParsing(responseTrovata)
     }
 
     private suspend fun cercaParolaOnline(parola: String): String = withContext(Dispatchers.IO) {
@@ -198,9 +223,7 @@ class MainActivity : AppCompatActivity() {
                     val request = chain.request().newBuilder()
                         .header("User-Agent", "Mozilla/5.0 (Android) ScaralinaApp")
                         .build()
-
                     Log.i("cercaParolaOnline", "Request URL: ${request.url()}")
-
                     chain.proceed(request)
                 }
                 .build()
@@ -214,7 +237,6 @@ class MainActivity : AppCompatActivity() {
             val service = retrofit.create(WiktionaryApi::class.java)
             val response = service.getDefinizione(parola)
 
-            // --- estrazione definizione robusta ---
             val query = response["query"] as? Map<*, *>
             val pages = query?.get("pages") as? Map<*, *>
             val firstPage = pages?.values?.firstOrNull() as? Map<*, *>
@@ -233,8 +255,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-
+    // Per test JSON
     fun testParsing(jsonString: String): String {
         val gson = Gson()
         val map: Map<String, Any> = gson.fromJson(jsonString, Map::class.java) as Map<String, Any>
@@ -255,5 +276,4 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
 }

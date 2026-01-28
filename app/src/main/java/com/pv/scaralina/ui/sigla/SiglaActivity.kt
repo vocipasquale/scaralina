@@ -2,18 +2,19 @@ package com.pv.scaralina.ui.sigla
 
 import android.app.Dialog
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
+import com.pv.scaralina.R
 import com.pv.scaralina.ScaralinaApp
-import kotlinx.coroutines.CoroutineScope
+import com.pv.scaralina.data.room.TermEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import com.pv.scaralina.R
-import com.pv.scaralina.data.room.TermEntity
 
 class SiglaActivity : AppCompatActivity() {
 
@@ -21,6 +22,7 @@ class SiglaActivity : AppCompatActivity() {
     private lateinit var btnTornaIndietro: Button
     private lateinit var rvTermini: RecyclerView
     private lateinit var termAdapter: TermAdapter
+    private lateinit var chipGroupIndice: ChipGroup
 
     private val database by lazy { (application as ScaralinaApp).database }
 
@@ -31,45 +33,89 @@ class SiglaActivity : AppCompatActivity() {
         btnAggiungi = findViewById(R.id.btnAggiungi)
         btnTornaIndietro = findViewById(R.id.btnTornaIndietro)
         rvTermini = findViewById(R.id.rvTermini)
+        chipGroupIndice = findViewById(R.id.chipGroupIndice)
 
-        // Setup RecyclerView
-        termAdapter = TermAdapter(emptyList(),
-            onItemClick = {  },
+        setupRecyclerView()
+        creaIndiceAlfabetico()
+        loadTermini()
+
+        btnAggiungi.setOnClickListener { showAddWordDialog() }
+        btnTornaIndietro.setOnClickListener { finish() }
+    }
+
+    // -----------------------------
+    // RecyclerView
+    // -----------------------------
+    private fun setupRecyclerView() {
+        termAdapter = TermAdapter(
+            emptyList(),
+            onItemClick = {},
             onDeleteClick = { term ->
-                CoroutineScope(Dispatchers.IO).launch {
-                    database.termDao().deleteByParola(term.parola) // DELETE diretta
-                    withContext(Dispatchers.Main) {
-                        loadTermini() // aggiorna la lista
-                    }
+                lifecycleScope.launch(Dispatchers.IO) {
+                    database.termDao().deleteByParola(term.parola)
+                    withContext(Dispatchers.Main) { loadTermini() }
                 }
             }
         )
 
-        rvTermini.apply {
-            layoutManager = LinearLayoutManager(this@SiglaActivity)
-            adapter = termAdapter
+        rvTermini.layoutManager = LinearLayoutManager(this)
+        rvTermini.adapter = termAdapter
+    }
+
+    // -----------------------------
+    // Indice alfabetico (Chip)
+    // -----------------------------
+    private fun creaIndiceAlfabetico() {
+
+        // Chip "TUTTE"
+        val chipTutte = creaChip("TUTTE") {
+            loadTermini()
         }
+        chipTutte.isChecked = true
+        chipGroupIndice.addView(chipTutte)
 
-        // Carica termini da DB
-        loadTermini()
-
-        // Pulsante Aggiungi sigla
-        btnAggiungi.setOnClickListener { showAddWordDialog() }
-
-        btnTornaIndietro.setOnClickListener {
-            finish()
+        // Chip A–Z
+        ('A'..'Z').forEach { lettera ->
+            chipGroupIndice.addView(
+                creaChip(lettera.toString()) {
+                    filtraPerLettera(lettera.toString())
+                }
+            )
         }
     }
 
-    private fun loadTermini() {
-        CoroutineScope(Dispatchers.IO).launch {
-            val termini = database.termDao().getAll().sortedBy { it.parola.lowercase() }
-            withContext(Dispatchers.Main) {
-                termAdapter.updateList(termini)
+    private fun creaChip(testo: String, onClick: () -> Unit): Chip =
+        Chip(this).apply {
+            text = testo
+            isCheckable = true
+            isClickable = true
+            setOnClickListener { onClick() }
+        }
+
+    private fun filtraPerLettera(lettera: String) {
+        lifecycleScope.launch {
+            val termini = withContext(Dispatchers.IO) {
+                database.termDao().getByIniziale(lettera)
             }
+            termAdapter.updateList(termini)
         }
     }
 
+    // -----------------------------
+    // Caricamento dati
+    // -----------------------------
+    private fun loadTermini() {
+        lifecycleScope.launch {
+            val termini = withContext(Dispatchers.IO) {
+                database.termDao().getAll().sortedBy { it.parola.lowercase() }
+            }
+            termAdapter.updateList(termini)
+        }
+    }
+
+    // -----------------------------
+    // Dialog aggiunta parola
+    // -----------------------------
     private fun showAddWordDialog() {
         val dialog = Dialog(this)
         dialog.setContentView(R.layout.dialog_add_sigla)
@@ -87,14 +133,12 @@ class SiglaActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Inserimento nel database in background
-            CoroutineScope(Dispatchers.IO).launch {
+            lifecycleScope.launch(Dispatchers.IO) {
                 database.termDao().insertAll(
                     listOf(TermEntity(parola = parola, definizione = definizione))
                 )
 
                 withContext(Dispatchers.Main) {
-                    // Chiudi il dialogo e ricarica i dati
                     dialog.dismiss()
                     loadTermini()
                 }
@@ -103,7 +147,4 @@ class SiglaActivity : AppCompatActivity() {
 
         dialog.show()
     }
-
-
-
 }

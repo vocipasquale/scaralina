@@ -1,5 +1,6 @@
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:fitsSystemWindows="true"
         android:orientation="vertical"
         android:padding="16dp"
@@ -9,27 +10,45 @@
     <!-- Barra pulsanti -->
     <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="16dp"
-            android:gravity="center">
+            android:gravity="center"
+            android:layout_marginTop="16dp">
+
+        <Button
+                android:id="@+id/btnTornaIndietro"
+                android:text="Torna indietro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <Space
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"/>
 
         <Button
                 android:id="@+id/btnAggiungi"
                 android:text="Aggiungi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
-
-        <Button
-                android:id="@+id/btnTornaIndietro"
-                android:text="Torna Indietro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"/>
     </LinearLayout>
 
-    <!-- RecyclerView per elenco termini -->
+    <!-- Indice alfabetico scrollabile -->
+    <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:scrollbars="none">
+
+        <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroupIndice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:singleSelection="true"
+                app:selectionRequired="true"
+                app:chipSpacingHorizontal="8dp"/>
+    </HorizontalScrollView>
+
+    <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvTermini"
             android:layout_width="match_parent"
