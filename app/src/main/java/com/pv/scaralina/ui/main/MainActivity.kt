@@ -214,12 +214,13 @@ class MainActivity : AppCompatActivity() {
     // NETWORK
     // ===========================
     interface WiktionaryApi {
-        @GET("w/api.php?action=query&format=json&prop=extracts&exintro=&explaintext=")
+        @GET("w/api.php?action=query&format=json&prop=extracts|categories&exintro=&explaintext=")
         suspend fun getDefinizione(@Query("titles") titolo: String): Map<String, Any>
     }
 
     private suspend fun cercaParolaOnline(parola: String): String = withContext(Dispatchers.IO) {
         try {
+            // Configurazione OkHttpClient con User-Agent
             val okHttpClient = okhttp3.OkHttpClient.Builder()
                 .addInterceptor { chain ->
                     val request = chain.request().newBuilder()
@@ -230,6 +231,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 .build()
 
+            // Retrofit setup
             val retrofit = Retrofit.Builder()
                 .baseUrl("https://it.wiktionary.org/")
                 .client(okHttpClient)
@@ -238,18 +240,32 @@ class MainActivity : AppCompatActivity() {
 
             val service = retrofit.create(WiktionaryApi::class.java)
             val response = service.getDefinizione(parola)
-            //val response = testParsing("{\"batchcomplete\":\"\",\"query\":{\"pages\":{\"74752\":{\"pageid\":74752,\"ns\":0,\"title\":\"seno\",\"extract\":\"definizione definizione definizione\"}}}}")
+            //val response = testParsing("{\"batchcomplete\":\"\",\"query\":{\"pages\":{\"622410\":{\"pageid\":622410,\"ns\":0,\"title\":\"aaa\",\"extract\":\"\",\"categories\":[{\"ns\":14,\"title\":\"Categoria:Avverbi in luganda\"}]}}}}")
 
+            // Parsing della response
             val query = response["query"] as? Map<*, *>
             val pages = query?.get("pages") as? Map<*, *>
             val firstPage = pages?.values?.firstOrNull() as? Map<*, *>
 
             when {
-                firstPage == null -> "" //PAROLA_NON_TROVATA
-                firstPage.containsKey("missing") -> "" //PAROLA_NON_TROVATA
+                firstPage == null -> "" // PAROLA NON TROVATA
+                firstPage.containsKey("missing") -> "" // PAROLA NON TROVATA
                 else -> {
-                    val extract = firstPage["extract"] as? String
-                    if (extract.isNullOrBlank()) PAROLA_TROVATA_SNZ_DEF else extract
+                    // Controllo categorie per lingua italiana
+                    val categories = firstPage["categories"] as? List<*>
+                    val isItaliano = categories
+                        ?.mapNotNull { it as? Map<*, *> }
+                        ?.mapNotNull { it["title"] as? String }
+                        ?.any { it.contains("italiano", ignoreCase = true) }
+                        ?: false
+
+                    if (!isItaliano) {
+                        "" // PAROLA NON TROVATA (non italiana)
+                    } else {
+                        // Estratto definizione breve
+                        val extract = firstPage["extract"] as? String
+                        if (extract.isNullOrBlank()) PAROLA_TROVATA_SNZ_DEF else extract
+                    }
                 }
             }
         } catch (e: Exception) {
@@ -258,25 +274,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
     // Per test JSON
     fun testParsing(jsonString: String): Map<String, Any> {
         val gson = Gson()
         val map: Map<String, Any> = gson.fromJson(jsonString, Map::class.java) as Map<String, Any>
-        return map //parseWiktionaryResponse(map)
+        return map
     }
 
-    fun parseWiktionaryResponse(json: Map<String, Any>): String {
-        val query = json["query"] as? Map<*, *>
-        val pages = query?.get("pages") as? Map<*, *>
-        val firstPage = pages?.values?.firstOrNull() as? Map<*, *>
-
-        return when {
-            firstPage == null -> "Parola non trovata"
-            firstPage.containsKey("missing") -> "Parola non trovata"
-            else -> {
-                val extract = firstPage["extract"] as? String
-                if (extract.isNullOrBlank()) "Parola trovata, ma senza definizione" else extract
-            }
-        }
-    }
 }

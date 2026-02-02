@@ -125,7 +125,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnTimer"
                     android:text="Start/Stop"
                     android:layout_width="wrap_content"
@@ -135,7 +135,7 @@
                     android:paddingHorizontal="16dp"
                     android:paddingVertical="8dp"/>
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnResetTimer"
                     android:text="Reset"
                     android:layout_width="wrap_content"
@@ -157,7 +157,7 @@
             android:layout_weight="1"
             android:paddingBottom="16dp">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSiglaActivity"
                 android:text="Elenco Sigle"
                 android:layout_width="wrap_content"
