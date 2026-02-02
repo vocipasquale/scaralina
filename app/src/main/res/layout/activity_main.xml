@@ -1,98 +1,170 @@
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:fitsSystemWindows="true"
         android:orientation="vertical"
-        android:padding="16dp"
-        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:background="#F5F5F5">
 
-    <!-- Campo parola con icona lente -->
-    <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilParola"
+    <!-- ================= BLOCCO ALTO ================= -->
+    <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Inserisci parola"
-            app:endIconMode="custom"
-            app:endIconDrawable="@drawable/ic_search_24"
-            app:endIconContentDescription="Cerca">
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:layout_marginTop="32dp">
 
-        <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etParola"
+        <!-- Campo parola + icone affiancate -->
+        <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:imeOptions="actionSearch"
-                android:inputType="text"/>
-    </com.google.android.material.textfield.TextInputLayout>
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
-    <!-- TextView per definizione o messaggi -->
-    <TextView
-            android:id="@+id/tvDefinizione"
-            android:text=""
-            android:textSize="36sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="16dp"
-            android:gravity="center"/>
+            <!-- Pulisci -->
+            <ImageButton
+                    android:id="@+id/btnClear"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="8dp"
+                    app:tint="@color/purple_500"
+                    android:src="@drawable/ink_eraser_24"
+                    android:contentDescription="Pulisci"/>
 
+            <!-- Campo di testo -->
+            <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilParola"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Inserisci parola">
 
+                <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etParola"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:imeOptions="actionSearch"
+                        android:inputType="text"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Durata timer -->
-    <TextView
-            android:id="@+id/tvDurata"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Durata: 3 min"
-            android:paddingTop="16dp"
-            android:textSize="16sp"
-            android:gravity="center"/>
+            <!-- Cerca -->
+            <ImageButton
+                    android:id="@+id/btnSearch"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="8dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="8dp"
+                    app:tint="@color/purple_500"
+                    android:src="@drawable/ic_search_24"
+                    android:contentDescription="Cerca"/>
+        </LinearLayout>
 
-    <SeekBar
-            android:id="@+id/sbDurataTimer"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:max="9"
-            android:progress="2"/>
-
-    <!-- TextView per definizione o messaggi -->
-    <TextView
-            android:id="@+id/tvContatore"
-            android:text=""
-            android:textSize="36sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="16dp"
-            android:gravity="center"/>
-
-    <!-- Layout orizzontale per Start/Stop + Reset -->
-    <LinearLayout
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp">
-
-        <Button
-                android:id="@+id/btnTimer"
-                android:text="Start/Stop"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-        <Button
-                android:id="@+id/btnResetTimer"
-                android:text="Reset"
-                android:layout_width="wrap_content"
+        <!-- TextView definizione -->
+        <TextView
+                android:id="@+id/tvDefinizione"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"/>
+                android:paddingTop="16dp"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:gravity="center"/>
+
+        <!-- Emoji feedback -->
+        <ImageView
+                android:id="@+id/ivDefinizione"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:layout_gravity="center"
+                android:paddingTop="8dp"
+                android:visibility="gone"
+                android:contentDescription="Emoji risultato"/>
     </LinearLayout>
 
-    <!-- Bottone SiglaActivity -->
-    <Button
-            android:id="@+id/btnSiglaActivity"
-            android:text="Sigle e altro"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"/>
-</LinearLayout>
+    <!-- ================= BLOCCO CENTRALE ================= -->
+    <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4">
 
+        <TextView
+                android:id="@+id/tvDurata"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Durata: 3 min"
+                android:textSize="16sp"
+                android:textColor="@color/black"/>
+
+        <SeekBar
+                android:id="@+id/sbDurataTimer"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:max="9"
+                android:progress="2"/>
+
+        <TextView
+                android:id="@+id/tvContatore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="36sp"
+                android:textColor="@color/black"
+                android:paddingTop="16dp"
+                android:gravity="center"/>
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp">
+
+            <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnTimer"
+                    android:text="Start/Stop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_button"
+                    android:textColor="@android:color/white"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="8dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnResetTimer"
+                    android:text="Reset"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/bg_button"
+                    android:textColor="@android:color/white"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="8dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- ================= BLOCCO BASSO ================= -->
+    <LinearLayout
+            android:orientation="vertical"
+            android:gravity="bottom|center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingBottom="16dp">
+
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSiglaActivity"
+                android:text="Elenco Sigle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_button"
+                android:textColor="@android:color/white"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"/>
+    </LinearLayout>
+</LinearLayout>

@@ -19,4 +19,11 @@ interface TermDao {
 
     @Query("DELETE FROM termini WHERE parola = :parola")
     suspend fun deleteByParola(parola: String)
+
+    @Query("""
+    SELECT * FROM termini
+    WHERE parola LIKE :iniziale || '%'
+    ORDER BY parola ASC
+    """)
+    fun getByIniziale(iniziale: String): List<TermEntity>
 }
