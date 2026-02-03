@@ -1,0 +1,199 @@
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F5F5F5">
+
+
+    <!-- ================= BLOCCO ALTO ================= -->
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="32dp">
+
+        <!-- barra dati giocatore -->
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="32dp">
+
+            <TextView
+                    android:id="@+id/tvGiocatore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Giocatore"
+                    android:textSize="36dp"
+                    android:textColor="@android:color/black"/>
+
+            <TextView
+                    android:id="@+id/tvPunteggio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Punteggio"
+                    android:textSize="36dp"
+                    android:textColor="@android:color/black"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+            <ImageButton
+                    android:id="@+id/btnResetTimer"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="8dp"
+                    android:gravity="center_vertical"
+                    app:tint="@color/purple_500"
+                    android:src="@drawable/ic_restart_24"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="Reset Timer"/>
+
+
+            <TextView
+                    android:id="@+id/tvContatore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="36dp"
+                    android:textColor="@color/black"
+                    android:paddingTop="16dp"
+                    android:gravity="center"/>
+
+            <ImageButton
+                    android:id="@+id/btnTimer"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="8dp"
+                    android:gravity="center_vertical"
+                    app:tint="@color/purple_500"
+                    android:src="@drawable/ic_play_24"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="Start/Stop Timer"/>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- ================= BLOCCO CENTRALE ================= -->
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="32dp"
+            android:gravity="center"
+    >
+
+        <ImageButton
+                android:id="@+id/btnCercaParola"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="8dp"
+                app:tint="@color/purple_500"
+                android:src="@drawable/ic_search_24"
+                android:contentDescription="Cerca Parola"
+                android:scaleType="fitCenter"/>
+        <TextView
+                android:layout_width="120dp"
+                android:layout_height="48dp"
+                android:text="Controlla parola"
+                android:textSize="18dp"
+                android:gravity="center"
+                android:textColor="@color/purple_500"/>
+
+    </LinearLayout>
+
+    <!-- ================= BLOCCO BASSO ================= -->
+    <!-- Barra pulsanti -->
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="16dp">
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+            <ImageButton
+                    android:id="@+id/btnChiudiPartita"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_chiudi_partita_24"
+                    app:tint="@color/purple_500"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="Chiudi"/>
+            <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="24dp"
+                    android:text="Chiusura!"
+                    android:textSize="14dp"
+                    android:gravity="center"
+                    android:textColor="@color/purple_500"/>
+        </LinearLayout>
+
+        <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+            <ImageButton
+                    android:id="@+id/btnCambiaTurno"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_change_24"
+                    app:tint="@color/purple_500"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="Passa"/>
+            <TextView
+                    android:layout_width="48dp"
+                    android:layout_height="24dp"
+                    android:text="Passa"
+                    android:textSize="14dp"
+                    android:gravity="center"
+                    android:textColor="@color/purple_500"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

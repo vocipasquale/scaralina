@@ -28,9 +28,12 @@
             </intent-filter>
         </activity>
 
-        <!-- AddWordActivity: schermata inserimento parola -->
         <activity
-                android:name=".ui.sigla.SiglaActivity"
+                android:name=".ui.partita.PartitaActivity"
+                android:exported="false"/>
+
+        <activity
+                android:name=".ui.turno.TurnoActivity"
                 android:exported="false"/>
 
     </application>

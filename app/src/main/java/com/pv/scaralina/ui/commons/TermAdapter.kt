@@ -1,4 +1,4 @@
-package com.pv.scaralina.ui.sigla
+package com.pv.scaralina.ui.commons
 
 import android.view.LayoutInflater
 import android.view.View

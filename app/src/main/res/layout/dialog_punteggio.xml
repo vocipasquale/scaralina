@@ -8,16 +8,11 @@
 
 
     <EditText
-        android:id="@+id/editTextParola"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Parola"/>
+            android:id="@+id/editTextPunteggio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Punteggio"/>
 
-    <EditText
-        android:id="@+id/editTextDefinizione"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Definizione"/>
 
 
     <!-- ================= BLOCCO BASSO ================= -->
@@ -34,18 +29,18 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center">
-        <ImageButton
-                android:id="@+id/btnClose"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_margin="8dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:padding="8dp"
-                android:src="@drawable/ic_close_24"
-                app:tint="@color/purple_500"
-                android:scaleType="fitCenter"
-                android:contentDescription="Chiudi"
-                android:layout_weight="1"/>
+            <ImageButton
+                    android:id="@+id/btnClose"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="8dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_close_24"
+                    app:tint="@color/purple_500"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="Chiudi"
+                    android:layout_weight="1"/>
             <TextView
                     android:layout_width="48dp"
                     android:layout_height="24dp"
@@ -66,18 +61,18 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center">
-        <ImageButton
-                android:id="@+id/btnAdd"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_margin="8dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:padding="8dp"
-                android:src="@drawable/ic_add_24"
-                app:tint="@color/purple_500"
-                android:scaleType="fitCenter"
-                android:contentDescription="Aggiungi"
-                android:layout_weight="1"/>
+            <ImageButton
+                    android:id="@+id/btnAdd"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="8dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_add_24"
+                    app:tint="@color/purple_500"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="Aggiungi"
+                    android:layout_weight="1"/>
             <TextView
                     android:layout_width="60dp"
                     android:layout_height="24dp"
@@ -89,5 +84,4 @@
         </LinearLayout>
 
     </LinearLayout>
-
 </LinearLayout>

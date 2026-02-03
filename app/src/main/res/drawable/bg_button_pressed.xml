@@ -1,7 +1,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="#E0E0E0"/> <!-- Colore dell'ombra -->
+            <solid android:color="#B0B0B0"/> <!-- Colore dell'ombra quando premuto -->
             <corners android:radius="0dp"/> <!-- Raggio degli angoli -->
             <padding
                     android:left="4dp"
@@ -12,7 +12,7 @@
     </item>
     <item android:top="2dp" android:left="2dp">
         <shape android:shape="rectangle">
-            <!--solid android:color="@android:color/white"/--> <!-- Colore del pulsante -->
+            <solid android:color="@android:color/darker_gray"/> <!-- Colore del pulsante quando premuto -->
             <corners android:radius="0dp"/> <!-- Raggio degli angoli -->
         </shape>
     </item>
