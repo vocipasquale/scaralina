@@ -41,6 +41,7 @@
                     android:layout_marginEnd="8dp"/>
 
             <EditText
+                    android:id="@+id/etGiocatore1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
@@ -56,6 +57,7 @@
                     android:textSize="24dp"/>
 
             <EditText
+                    android:id="@+id/etGiocatore2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
@@ -71,6 +73,7 @@
                     android:textSize="24dp"/>
 
             <EditText
+                    android:id="@+id/etGiocatore3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
@@ -86,6 +89,7 @@
                     android:textSize="24dp"/>
 
             <EditText
+                    android:id="@+id/etGiocatore4"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
@@ -134,12 +138,20 @@
                     android:progress="2"
                     app:tint="@color/purple_500"/>
 
-            <TextView
+              <TextView
                     android:id="@+id/tvDurata"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Timer: "
+                    android:text=""
+                    android:textSize="16sp"
+                    android:textColor="@color/black"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text=" min"
                     android:textSize="16sp"
                     android:textColor="@color/black"/>
 
