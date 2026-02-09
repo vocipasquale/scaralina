@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#F5F5F5"
+        android:padding="16dp"
+        android:fitsSystemWindows="true">
+
+    <!-- CONTENUTO PRINCIPALE -->
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        <!-- ================= BLOCCO ALTO ================= -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="48dp">
+
+            <!-- Campo parola + icone -->
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                <ImageButton
+                        android:id="@+id/btnClear"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:padding="8dp"
+                        android:src="@drawable/ink_eraser_24"
+                        android:scaleType="fitCenter"
+                        app:tint="@color/purple_500"
+                        android:contentDescription="Pulisci"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilParola"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="Inserisci parola">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etParola"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="18sp"
+                            android:imeOptions="actionSearch"
+                            android:inputType="text"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageButton
+                        android:id="@+id/btnSearch"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="8dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_search_24"
+                        android:scaleType="fitCenter"
+                        app:tint="@color/purple_500"
+                        android:contentDescription="Cerca"/>
+            </LinearLayout>
+
+            <TextView
+                    android:id="@+id/tvDefinizione"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:gravity="center"/>
+
+            <ImageView
+                    android:id="@+id/ivDefinizione"
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:layout_gravity="center"
+                    android:paddingTop="8dp"
+                    android:visibility="gone"
+                    android:scaleType="fitCenter"
+                    app:tint="@color/purple_500"
+                    android:contentDescription="Emoji risultato"/>
+        </LinearLayout>
+
+        <!-- ================= BLOCCO CENTRALE (SCROLLABILE) ================= -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginTop="32dp">
+
+            <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none">
+
+                <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chipGroupIndice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:singleSelection="true"
+                        app:selectionRequired="true"
+                        app:chipSpacingHorizontal="8dp"/>
+            </HorizontalScrollView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvTermini"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="16dp"
+                    android:paddingBottom="16dp"/>
+        </LinearLayout>
+
+        <!-- ================= BLOCCO BASSO (SEMPRE VISIBILE) ================= -->
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="16dp">
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+            <ImageButton
+                    android:id="@+id/btnClose"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="8dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_close_24"
+                    android:scaleType="fitCenter"
+                    app:tint="@color/purple_500"
+                    android:contentDescription="Chiudi"
+                    android:layout_weight="1"/>
+                <TextView
+                        android:layout_width="48dp"
+                        android:layout_height="24dp"
+                        android:text="Chiudi"
+                        android:textSize="14dp"
+                        android:gravity="center"
+                        android:textColor="@color/purple_500"/>
+            </LinearLayout>
+
+            <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+            <ImageButton
+                    android:id="@+id/btnAggiungi"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="8dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_add_24"
+                    android:scaleType="fitCenter"
+                    app:tint="@color/purple_500"
+                    android:contentDescription="Aggiungi"
+                    android:layout_weight="1"/>
+                <TextView
+                        android:layout_width="60dp"
+                        android:layout_height="24dp"
+                        android:text="Aggiungi"
+                        android:textSize="14dp"
+                        android:gravity="center"
+                        android:textColor="@color/purple_500"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>
