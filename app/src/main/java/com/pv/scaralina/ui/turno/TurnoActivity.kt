@@ -192,6 +192,8 @@ class TurnoActivity : AppCompatActivity() {
                         altriGiocatori.filter { it != giocatore }.get(0),
                         altriGiocatori.filter { it != giocatore })
                 } else {
+                    timer?.cancel()
+                    finish()
                     startActivity(Intent(this, TurnoActivity::class.java))
                 }
             }
@@ -208,6 +210,8 @@ class TurnoActivity : AppCompatActivity() {
         getPunteggioDialog("") { punteggio ->
             Partita.aggiornaPunteggio(Partita.getGiocatoreCorrente(), punteggio)
             Partita.passaGiocatoreSuccessivo()
+            timer?.cancel()
+            finish()
             startActivity(Intent(this, TurnoActivity::class.java))
         }
     }

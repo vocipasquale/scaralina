@@ -88,49 +88,67 @@
             android:layout_marginTop="16dp"
             android:gravity="center">
 
-        <LinearLayout
+        <!--LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center">
+                android:gravity="center" -->
+
+        <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:rowCount="2"
+                android:layout_weight="1"
+                android:layout_marginBottom="16dp">
+
 
             <TextView
                     android:id="@+id/tvGiocatorePunteggio1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
                     android:layout_weight="1"
                     android:textAlignment="center"
-                    android:visibility="gone"
-                    android:text=""/>
+                    android:visibility="visible"
+                    android:text=""
+                    android:textSize="32dp"/>
 
             <TextView
                     android:id="@+id/tvGiocatorePunteggio2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
                     android:layout_weight="1"
                     android:textAlignment="center"
-                    android:visibility="gone"
-                    android:text=""/>
+                    android:visibility="visible"
+                    android:text=""
+                    android:textSize="32dp"/>
 
             <TextView
                     android:id="@+id/tvGiocatorePunteggio3"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_columnWeight="1"
                     android:textAlignment="center"
-                    android:visibility="gone"
-                    android:text=""/>
+                    android:visibility="visible"
+                    android:text=""
+                    android:textSize="32dp"/>
 
             <TextView
                     android:id="@+id/tvGiocatorePunteggio4"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_columnWeight="1"
                     android:textAlignment="center"
-                    android:visibility="gone"
-                    android:text=""/>
-        </LinearLayout>
+                    android:visibility="visible"
+                    android:text=""
+                    android:textSize="32dp"/>
+        </GridLayout>
+        <!--   </LinearLayout>-->
 
         <ImageButton
                 android:id="@+id/btnCercaParola"

@@ -87,7 +87,7 @@ class PartitaActivity : AppCompatActivity() {
                     Partita.timerAbilitato = true
                     Partita.durataTimer = tvDurata.text?.toString()?.toInt() ?: 0
                 }
-
+                Partita.avvia()
                 startActivity(Intent(this, TurnoActivity::class.java))
             }
         }
