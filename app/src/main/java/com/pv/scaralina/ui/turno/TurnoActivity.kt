@@ -2,6 +2,7 @@ package com.pv.scaralina.ui.turno
 
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.PorterDuff
 import android.media.AudioManager
 import android.media.ToneGenerator
 import com.pv.scaralina.R
@@ -11,16 +12,20 @@ import android.text.InputFilter
 import android.util.Log
 import android.view.View
 import android.widget.EditText
+import android.widget.GridLayout
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.pv.scaralina.data.Giocatore
 import com.pv.scaralina.data.Partita
 import com.pv.scaralina.ui.commons.CercaParolaDialogFragment
+import com.pv.scaralina.ui.dialogs.PunteggiDialogFragment
 
 
-class TurnoActivity : AppCompatActivity() {
+class TurnoActivity : AppCompatActivity(),
+    PunteggiDialogFragment.OnPunteggiChangedListener {
 
     private lateinit var tvGiocatorePunteggio1: TextView
     private lateinit var tvGiocatorePunteggio2: TextView
@@ -38,6 +43,7 @@ class TurnoActivity : AppCompatActivity() {
     private lateinit var btnCercaParola: ImageButton
     private lateinit var btnChiudiPartita: ImageButton
     private lateinit var btnCambiaTurno: ImageButton
+    private lateinit var gdPunteggio: GridLayout
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,6 +63,12 @@ class TurnoActivity : AppCompatActivity() {
         btnCercaParola = findViewById(R.id.btnCercaParola)
         btnChiudiPartita = findViewById(R.id.btnChiudiPartita)
         btnCambiaTurno = findViewById(R.id.btnCambiaTurno)
+        val gdPunteggio = findViewById<GridLayout>(R.id.gdPunteggio)
+
+        gdPunteggio.setOnClickListener{
+            val dialog = PunteggiDialogFragment()
+            dialog.show(supportFragmentManager, "PunteggiDialog")
+        }
 
         btnCercaParola.setOnClickListener {
             val dialog = CercaParolaDialogFragment()
@@ -78,41 +90,78 @@ class TurnoActivity : AppCompatActivity() {
         avviaTurno()
     }
 
+    override fun onPunteggiChanged() {
+        aggiornaPunteggiUI()
+    }
+
+    private fun aggiornaPunteggiUI(){
+        val numGiocatori = Partita.giocatori.size
+
+        if (numGiocatori > 0) {
+            tvGiocatorePunteggio1.text =
+                "${Partita.giocatori[0].nome}\n${Partita.giocatori[0].getpunteggioTotale()}"
+            tvGiocatorePunteggio1.visibility = View.VISIBLE
+        }
+        if (numGiocatori > 1) {
+            tvGiocatorePunteggio2.text =
+                "${Partita.giocatori[1].nome}\n${Partita.giocatori[1].getpunteggioTotale()}"
+            tvGiocatorePunteggio2.visibility = View.VISIBLE
+        }
+        if (numGiocatori > 2) {
+            tvGiocatorePunteggio3.text =
+                "${Partita.giocatori[2].nome}\n${Partita.giocatori[2].getpunteggioTotale()}"
+            tvGiocatorePunteggio3.visibility = View.VISIBLE
+        }
+        if (numGiocatori > 3) {
+            tvGiocatorePunteggio4.text =
+                "${Partita.giocatori[3].nome}\n${Partita.giocatori[3].getpunteggioTotale()}"
+            tvGiocatorePunteggio4.visibility = View.VISIBLE
+        }
+    }
     private fun avviaTurno() {
 
         //mostra punteggio corrente dei giocatori
-        val numGiocatori = Partita.giocatori.size
-        for (i in 0..numGiocatori - 1) {
-            if (i == 0) {
-                tvGiocatorePunteggio1.text = Partita.giocatori[i].nome + "\n" + Partita.giocatori[i].punteggio
-                tvGiocatorePunteggio1.visibility = View.VISIBLE
-            }
-
-            if (i == 1) {
-                tvGiocatorePunteggio2.text = Partita.giocatori[i].nome + "\n" + Partita.giocatori[i].punteggio
-                tvGiocatorePunteggio2.visibility = View.VISIBLE
-            }
-
-            if (i == 2) {
-                tvGiocatorePunteggio3.text = Partita.giocatori[i].nome + "\n" + Partita.giocatori[i].punteggio
-                tvGiocatorePunteggio3.visibility = View.VISIBLE
-            }
-
-            if (i == 3) {
-                tvGiocatorePunteggio4.text = Partita.giocatori[i].nome + "\n" + Partita.giocatori[i].punteggio
-                tvGiocatorePunteggio4.visibility = View.VISIBLE
-            }
-        }
+//        val numGiocatori = Partita.giocatori.size
+//        for (i in 0..numGiocatori - 1) {
+//            if (i == 0) {
+//                tvGiocatorePunteggio1.text = Partita.giocatori[i].nome + "\n" + Partita.giocatori[i].getpunteggioTotale()
+//                tvGiocatorePunteggio1.visibility = View.VISIBLE
+//            }
+//
+//            if (i == 1) {
+//                tvGiocatorePunteggio2.text = Partita.giocatori[i].nome + "\n" + Partita.giocatori[i].getpunteggioTotale()
+//                tvGiocatorePunteggio2.visibility = View.VISIBLE
+//            }
+//
+//            if (i == 2) {
+//                tvGiocatorePunteggio3.text = Partita.giocatori[i].nome + "\n" + Partita.giocatori[i].getpunteggioTotale()
+//                tvGiocatorePunteggio3.visibility = View.VISIBLE
+//            }
+//
+//            if (i == 3) {
+//                tvGiocatorePunteggio4.text = Partita.giocatori[i].nome + "\n" + Partita.giocatori[i].getpunteggioTotale()
+//                tvGiocatorePunteggio4.visibility = View.VISIBLE
+//            }
+//        }
+        aggiornaPunteggiUI()
 
 
         if (Partita.timerAbilitato) {
             selectedMinutes = Partita.durataTimer
             remainingMillis = (selectedMinutes * 60 * 1000).toLong()
-            llTimer.visibility = View.VISIBLE
+            //llTimer.visibility = View.VISIBLE
+            btnReset.isEnabled = true
+            btnReset.setColorFilter(ContextCompat.getColor(this, R.color.purple_500), PorterDuff.Mode.SRC_IN)
+            btnStartStop.isEnabled = true
+            btnStartStop.setColorFilter(ContextCompat.getColor(this, R.color.purple_500), PorterDuff.Mode.SRC_IN)
             startTimer()
         } else {
             selectedMinutes = 0
-            llTimer.visibility = View.GONE
+            //llTimer.visibility = View.GONE
+            btnReset.isEnabled = false
+            btnReset.setColorFilter(ContextCompat.getColor(this, R.color.purple_200), PorterDuff.Mode.SRC_IN)
+            btnStartStop.isEnabled = false
+            btnStartStop.setColorFilter(ContextCompat.getColor(this, R.color.purple_200), PorterDuff.Mode.SRC_IN)
         }
     }
 
@@ -174,7 +223,8 @@ class TurnoActivity : AppCompatActivity() {
         if (giocatore.equals(Partita.getGiocatoreCorrente())) {
             getPunteggioDialog("Chiusura") { punteggio ->
                 // Aggiorna il punteggio del giocatore corrente con punteggioChiusura
-                Partita.aggiornaPunteggio(Partita.getGiocatoreCorrente(), punteggio) //incremento
+                //Partita.aggiornaPunteggio(Partita.getGiocatoreCorrente(), punteggio) //incremento
+                giocatore.aggiungiPunteggio(punteggio)
 
                 showChiudiPartitaDialog(
                     altriGiocatori.get(0),
@@ -183,9 +233,12 @@ class TurnoActivity : AppCompatActivity() {
         } else {
             getPunteggioDialog("Penalità ${giocatore.nome}") { punteggio ->
                 // Aggiorna il punteggio del giocatore corrente con punteggioChiusura
-                Partita.aggiornaPunteggio(Partita.getGiocatoreCorrente(), punteggio) //incremento
+                //Partita.aggiornaPunteggio(Partita.getGiocatoreCorrente(), punteggio) //incremento
+                Partita.getGiocatoreCorrente().aggiungiPunteggio(punteggio)
+
                 // Aggiorna il punteggio del giocatore con la penalità
-                Partita.aggiornaPunteggio(giocatore, punteggio * (-1)) //decremento
+                //Partita.aggiornaPunteggio(giocatore, punteggio * (-1)) //decremento
+                giocatore.aggiungiPunteggio(punteggio * (-1))
 
                 if (altriGiocatori.size > 1) {
                     showChiudiPartitaDialog(
@@ -208,7 +261,9 @@ class TurnoActivity : AppCompatActivity() {
     // -----------------------------
     private fun showCambiaTurnoDialog() {
         getPunteggioDialog("") { punteggio ->
-            Partita.aggiornaPunteggio(Partita.getGiocatoreCorrente(), punteggio)
+            //Partita.aggiornaPunteggio(Partita.getGiocatoreCorrente(), punteggio)
+            Partita.getGiocatoreCorrente().aggiungiPunteggio(punteggio)
+
             Partita.passaGiocatoreSuccessivo()
             timer?.cancel()
             finish()

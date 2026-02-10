@@ -30,18 +30,29 @@ object Partita {
         }
     }
 
-    fun aggiornaPunteggio(giocatoreCorrente: Giocatore, punteggio: Int) {
-        // Trova l'indice del giocatore corrente
-        val index = _giocatori.indexOf(giocatoreCorrente)
-
-        // Se il giocatore esiste nella lista, aggiorna il punteggio
-        if (index != -1) {
-            val giocatoreAggiornato = Giocatore(giocatoreCorrente.nome, giocatoreCorrente.punteggio+punteggio)
-            _giocatori[index] = giocatoreAggiornato
-            Log.d("aggiornaPunteggio", _giocatori[index].nome+" "+_giocatori[index].punteggio )
-        }else{
-            Log.e("aggiornaPunteggio", giocatoreCorrente.nome+" non presente!" )
-        }
+    fun avvia() {
+        Log.d("avvia", "avvia")
     }
+
+    fun getNumeroMani(): Int {
+        return _giocatori.maxOfOrNull { giocatore ->
+            giocatore.getPunteggi().size
+        } ?: 0
+    }
+
+
+//    fun aggiornaPunteggio(giocatoreCorrente: Giocatore, punteggio: Int) {
+//        // Trova l'indice del giocatore corrente
+//        val index = _giocatori.indexOf(giocatoreCorrente)
+//
+//        // Se il giocatore esiste nella lista, aggiorna il punteggio
+//        if (index != -1) {
+//            val giocatoreAggiornato = Giocatore(giocatoreCorrente.nome, giocatoreCorrente.punteggio+punteggio)
+//            _giocatori[index] = giocatoreAggiornato
+//            Log.d("aggiornaPunteggio", _giocatori[index].nome+" "+_giocatori[index].punteggio )
+//        }else{
+//            Log.e("aggiornaPunteggio", giocatoreCorrente.nome+" non presente!" )
+//        }
+//    }
 
 }

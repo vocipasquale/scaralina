@@ -67,18 +67,27 @@ class PartitaActivity : AppCompatActivity() {
 
         btnStart.setOnClickListener {
             if(checkPartita()){
+                var nuovoGiocatore: Giocatore
 
                 if (etGiocatore1.text?.isNotBlank() == true) {
-                    Partita.aggiungiGiocatore(Giocatore(etGiocatore1.text.toString(), 0))
+                    nuovoGiocatore = Giocatore(etGiocatore1.text.toString())
+                    nuovoGiocatore.aggiungiPunteggio(0)
+                    Partita.aggiungiGiocatore(nuovoGiocatore)
                 }
                 if (etGiocatore2.text?.isNotBlank() == true) {
-                    Partita.aggiungiGiocatore(Giocatore(etGiocatore2.text.toString(), 0))
+                    nuovoGiocatore = Giocatore(etGiocatore2.text.toString())
+                    nuovoGiocatore.aggiungiPunteggio(0)
+                    Partita.aggiungiGiocatore(nuovoGiocatore)
                 }
                 if (etGiocatore3.text?.isNotBlank() == true) {
-                    Partita.aggiungiGiocatore(Giocatore(etGiocatore3.text.toString(), 0))
+                    nuovoGiocatore = Giocatore(etGiocatore3.text.toString())
+                    nuovoGiocatore.aggiungiPunteggio(0)
+                    Partita.aggiungiGiocatore(nuovoGiocatore)
                 }
                 if (etGiocatore4.text?.isNotBlank() == true) {
-                    Partita.aggiungiGiocatore(Giocatore(etGiocatore4.text.toString(), 0))
+                    nuovoGiocatore = Giocatore(etGiocatore4.text.toString())
+                    nuovoGiocatore.aggiungiPunteggio(0)
+                    Partita.aggiungiGiocatore(nuovoGiocatore)
                 }
                 Log.d("PartitaActivity", "Num giocatori: "+Partita.giocatori.size)
                 Log.d("PartitaActivity", "giocatori: "+Partita.giocatori)
