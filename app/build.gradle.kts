@@ -13,8 +13,8 @@ android {
         minSdk = 21
         //noinspection EditedTargetSdkVersion
         targetSdk = 35
-        versionCode = 21
-        versionName = "21.0"
+        versionCode = 22
+        versionName = "22.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -39,6 +39,8 @@ android {
 }
 
 dependencies {
+
+    implementation("nl.dionsegijn:konfetti-xml:2.0.4")
 
     // Versioni compatibili con compileSdk 34 e AGP 8.2.0
     implementation("androidx.core:core-ktx:1.10.1")

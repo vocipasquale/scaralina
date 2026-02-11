@@ -22,7 +22,8 @@
                 android:layout_height="wrap_content"
                 android:text="Giocatori"
                 android:textSize="48dp"
-                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:textColor="@color/purple_500"
                 android:layout_marginBottom="16dp"/>
 
         <GridLayout
@@ -38,6 +39,7 @@
                     android:text="1"
                     android:textSize="24dp"
                     android:layout_gravity="end|center_vertical"
+                    android:textColor="@color/purple_500"
                     android:layout_marginEnd="8dp"/>
 
             <EditText
@@ -46,7 +48,8 @@
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:hint="Nome Giocatore 1"
-                    android:textSize="24dp"/>
+                    android:textSize="24dp"
+                    android:textColor="@color/purple_500"/>
 
             <TextView
                     android:layout_width="wrap_content"
@@ -54,6 +57,7 @@
                     android:text="2"
                     android:layout_gravity="end|center_vertical"
                     android:layout_marginEnd="8dp"
+                    android:textColor="@color/purple_500"
                     android:textSize="24dp"/>
 
             <EditText
@@ -62,6 +66,7 @@
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:hint="Nome Giocatore 2"
+                    android:textColor="@color/purple_500"
                     android:textSize="24dp"/>
 
             <TextView
@@ -70,6 +75,7 @@
                     android:text="3"
                     android:layout_gravity="end|center_vertical"
                     android:layout_marginEnd="8dp"
+                    android:textColor="@color/purple_500"
                     android:textSize="24dp"/>
 
             <EditText
@@ -78,6 +84,7 @@
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:hint="Nome Giocatore 3"
+                    android:textColor="@color/purple_500"
                     android:textSize="24dp"/>
 
             <TextView
@@ -86,6 +93,7 @@
                     android:text="4"
                     android:layout_gravity="end|center_vertical"
                     android:layout_marginEnd="8dp"
+                    android:textColor="@color/purple_500"
                     android:textSize="24dp"/>
 
             <EditText
@@ -94,6 +102,7 @@
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:hint="Nome Giocatore 4"
+                    android:textColor="@color/purple_500"
                     android:textSize="24dp"/>
 
         </GridLayout>
@@ -114,7 +123,8 @@
                 android:layout_height="wrap_content"
                 android:text="Timer"
                 android:textSize="48dp"
-                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:textColor="@color/purple_500"
                 android:layout_marginBottom="16dp"/>
 
         <LinearLayout
@@ -127,7 +137,8 @@
             <CheckBox
                     android:id="@+id/ckbTimer"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    app:tint="@color/purple_500"/>
 
             <SeekBar
                     android:id="@+id/sbDurataTimer"
@@ -152,8 +163,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text=" min"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"/>
+                    android:textSize="18sp"
+                    android:textColor="@color/purple_500"/>
 
         </LinearLayout>
 
@@ -176,8 +187,8 @@
 
             <ImageButton
                     android:id="@+id/btnBack"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
                     android:layout_weight="1"
                     android:layout_margin="8dp"
                     android:background="?attr/selectableItemBackground"
@@ -187,10 +198,10 @@
                     android:scaleType="fitCenter"
                     android:contentDescription="Indietro"/>
             <TextView
-                    android:layout_width="48dp"
-                    android:layout_height="24dp"
+                    android:layout_width="96dp"
+                    android:layout_height="48dp"
                     android:text="Indietro"
-                    android:textSize="14dp"
+                    android:textSize="18dp"
                     android:gravity="center"
                     android:textColor="@color/purple_500"/>
         </LinearLayout>
@@ -207,8 +218,8 @@
                 android:gravity="center">
             <ImageButton
                     android:id="@+id/btnStart"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
                     android:layout_weight="1"
                     android:layout_margin="8dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
@@ -218,10 +229,10 @@
                     android:scaleType="fitCenter"
                     android:contentDescription="Aggiungi"/>
             <TextView
-                    android:layout_width="48dp"
-                    android:layout_height="24dp"
+                    android:layout_width="96dp"
+                    android:layout_height="48dp"
                     android:text="Avvia"
-                    android:textSize="14dp"
+                    android:textSize="18dp"
                     android:gravity="center"
                     android:textColor="@color/purple_500"/>
 

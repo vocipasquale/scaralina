@@ -46,15 +46,13 @@ class PartitaActivity : AppCompatActivity() {
         seekBarDurata.progress = selectedMinutes.toInt()
         tvDurata.text = "$selectedMinutes"
 
+        clearActivity()
+
         seekBarDurata.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 selectedMinutes = if (progress < 1) 1 else progress.toLong()
                 tvDurata.text = "$selectedMinutes"
-//                if (!isRunning) {
-//                    remainingMillis = selectedMinutes * 60 * 1000
-//                    updateTimerText(remainingMillis)
-//                }
-            }
+        }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
@@ -96,12 +94,18 @@ class PartitaActivity : AppCompatActivity() {
                     Partita.timerAbilitato = true
                     Partita.durataTimer = tvDurata.text?.toString()?.toInt() ?: 0
                 }
-                Partita.avvia()
                 startActivity(Intent(this, TurnoActivity::class.java))
             }
         }
 
         btnBack.setOnClickListener { finish() }
+    }
+
+    private fun clearActivity() {
+        etGiocatore1.text.clear()
+        etGiocatore2.text.clear()
+        etGiocatore3.text.clear()
+        etGiocatore4.text.clear()
     }
 
     private fun checkPartita(): Boolean {

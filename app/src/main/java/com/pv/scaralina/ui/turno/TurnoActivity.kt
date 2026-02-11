@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.pv.scaralina.data.Giocatore
 import com.pv.scaralina.data.Partita
+import com.pv.scaralina.ui.chiusura.ChiusuraActivity
 import com.pv.scaralina.ui.commons.CercaParolaDialogFragment
 import com.pv.scaralina.ui.dialogs.PunteggiDialogFragment
 
@@ -236,7 +237,7 @@ class TurnoActivity : AppCompatActivity(),
                 //Partita.aggiornaPunteggio(Partita.getGiocatoreCorrente(), punteggio) //incremento
                 Partita.getGiocatoreCorrente().aggiungiPunteggio(punteggio)
 
-                // Aggiorna il punteggio del giocatore con la penalità
+                //Aggiorna il punteggio del giocatore con la penalità
                 //Partita.aggiornaPunteggio(giocatore, punteggio * (-1)) //decremento
                 giocatore.aggiungiPunteggio(punteggio * (-1))
 
@@ -247,7 +248,7 @@ class TurnoActivity : AppCompatActivity(),
                 } else {
                     timer?.cancel()
                     finish()
-                    startActivity(Intent(this, TurnoActivity::class.java))
+                    startActivity(Intent(this, ChiusuraActivity::class.java))
                 }
             }
         }
