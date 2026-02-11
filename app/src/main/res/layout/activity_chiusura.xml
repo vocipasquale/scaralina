@@ -1,0 +1,110 @@
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:fitsSystemWindows="true"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#F5F5F5">
+
+        <!-- ================= BLOCCO ALTO ================= -->
+        <LinearLayout
+                android:id="@+id/llVincitore"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="2"
+                android:layout_marginTop="32dp">
+
+
+        </LinearLayout>
+
+
+        <!-- ================= BLOCCO BASSO ================= -->
+        <!-- Barra pulsanti -->
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="16dp">
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                <ImageButton
+                        android:id="@+id/btnClose"
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:layout_weight="1"
+                        android:layout_margin="8dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_close_24"
+                        app:tint="@color/purple_500"
+                        android:scaleType="fitCenter"
+                        android:contentDescription="Chiudi"/>
+                <TextView
+                        android:layout_width="96dp"
+                        android:layout_height="48dp"
+                        android:text="Chiudi"
+                        android:textSize="18dp"
+                        android:gravity="center"
+                        android:textColor="@color/purple_500"/>
+            </LinearLayout>
+
+            <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                <ImageButton
+                        android:id="@+id/btnNuovaPartita"
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:layout_weight="1"
+                        android:layout_margin="8dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_scarab_24"
+                        app:tint="@color/purple_500"
+                        android:scaleType="fitCenter"
+                        android:contentDescription="Nuova partita"/>
+                <TextView
+                        android:layout_width="96dp"
+                        android:layout_height="48dp"
+                        android:text="Nuova\nPartita"
+                        android:textSize="18dp"
+                        android:gravity="center"
+                        android:textColor="@color/purple_500"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <nl.dionsegijn.konfetti.xml.KonfettiView
+            android:id="@+id/konfettiView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="false"/>
+
+</FrameLayout>

@@ -36,6 +36,11 @@
                 android:name=".ui.turno.TurnoActivity"
                 android:exported="false"/>
 
+        <activity
+                android:name=".ui.chiusura.ChiusuraActivity"
+                android:exported="false"/>
+
+
     </application>
 
 </manifest>

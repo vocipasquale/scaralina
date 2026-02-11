@@ -8,6 +8,7 @@ import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import com.pv.scaralina.R
 import com.pv.scaralina.ScaralinaApp
+import com.pv.scaralina.data.Partita
 import com.pv.scaralina.ui.commons.CercaParolaDialogFragment
 import com.pv.scaralina.ui.partita.PartitaActivity
 
@@ -39,6 +40,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnNuovaPartita.setOnClickListener {
+            Partita.reset()
             startActivity(Intent(this, PartitaActivity::class.java))
         }
 

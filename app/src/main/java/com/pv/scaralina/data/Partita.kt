@@ -30,18 +30,14 @@ object Partita {
         }
     }
 
-    fun aggiornaPunteggio(giocatoreCorrente: Giocatore, punteggio: Int) {
-        // Trova l'indice del giocatore corrente
-        val index = _giocatori.indexOf(giocatoreCorrente)
+    fun avvia() {
+        Log.d("avvia", "avvia")
+    }
 
-        // Se il giocatore esiste nella lista, aggiorna il punteggio
-        if (index != -1) {
-            val giocatoreAggiornato = Giocatore(giocatoreCorrente.nome, giocatoreCorrente.punteggio+punteggio)
-            _giocatori[index] = giocatoreAggiornato
-            Log.d("aggiornaPunteggio", _giocatori[index].nome+" "+_giocatori[index].punteggio )
-        }else{
-            Log.e("aggiornaPunteggio", giocatoreCorrente.nome+" non presente!" )
-        }
+    fun reset() {
+        _giocatori.clear() // Pulisce la lista dei giocatori
+        timerAbilitato = false // Resetta lo stato del timer
+        durataTimer = 0 // Resetta la durata del timer
     }
 
 }

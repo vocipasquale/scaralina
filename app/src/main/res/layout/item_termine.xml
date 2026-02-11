@@ -16,13 +16,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:textSize="18sp"/>
+                android:textColor="@color/purple_500"
+                android:textSize="24dp"/>
 
         <TextView
                 android:id="@+id/tvDefinizione"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
+                android:textSize="18dp"
+                android:textColor="@color/purple_200"
                 android:layout_marginTop="2dp"/>
 
     </LinearLayout>

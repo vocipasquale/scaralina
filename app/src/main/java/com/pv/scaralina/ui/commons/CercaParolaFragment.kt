@@ -183,7 +183,7 @@ class CercaParolaDialogFragment : DialogFragment() {
             elevation = 0f
 
             // Testo coerente
-            setTextColor(resources.getColor(R.color.black))
+            setTextColor(resources.getColor(R.color.purple_500))
 
             // Padding manuale (solo area touch)
             setPadding(12, 8, 12, 8)

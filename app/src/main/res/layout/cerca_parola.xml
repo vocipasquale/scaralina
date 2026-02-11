@@ -51,9 +51,11 @@
                             android:id="@+id/etParola"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textSize="18sp"
+                            android:textSize="24sp"
                             android:imeOptions="actionSearch"
-                            android:inputType="text"/>
+                            android:inputType="text"
+                            android:textColor="@color/purple_500"/>
+
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <ImageButton
@@ -136,8 +138,8 @@
                     android:gravity="center">
             <ImageButton
                     android:id="@+id/btnClose"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
                     android:layout_margin="8dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:padding="8dp"
@@ -147,8 +149,8 @@
                     android:contentDescription="Chiudi"
                     android:layout_weight="1"/>
                 <TextView
-                        android:layout_width="48dp"
-                        android:layout_height="24dp"
+                        android:layout_width="96dp"
+                        android:layout_height="48dp"
                         android:text="Chiudi"
                         android:textSize="14dp"
                         android:gravity="center"
@@ -167,8 +169,8 @@
                     android:gravity="center">
             <ImageButton
                     android:id="@+id/btnAggiungi"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
                     android:layout_margin="8dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:padding="8dp"
@@ -178,8 +180,8 @@
                     android:contentDescription="Aggiungi"
                     android:layout_weight="1"/>
                 <TextView
-                        android:layout_width="60dp"
-                        android:layout_height="24dp"
+                        android:layout_width="96dp"
+                        android:layout_height="48dp"
                         android:text="Aggiungi"
                         android:textSize="14dp"
                         android:gravity="center"
