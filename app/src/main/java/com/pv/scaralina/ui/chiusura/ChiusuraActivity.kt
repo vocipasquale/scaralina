@@ -99,7 +99,7 @@ class ChiusuraActivity : AppCompatActivity() {
         // ================= BUTTONS =================
 
         btnClose.setOnClickListener {
-            finishAndRemoveTask()
+            finishAffinity()
         }
 
         btnNuovaPartita.setOnClickListener {
