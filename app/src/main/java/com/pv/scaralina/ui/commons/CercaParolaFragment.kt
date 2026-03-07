@@ -192,7 +192,11 @@ class CercaParolaDialogFragment : DialogFragment() {
     private fun filtraPerLettera(lettera: String) {
         lifecycleScope.launch {
             val termini = withContext(Dispatchers.IO) {
-                database.termDao().getByIniziale(lettera)
+                if(lettera in listOf("W", "X", "Y", "K", "J")) {
+                    database.termDao().getContains(lettera)
+                }else{
+                    database.termDao().getByIniziale(lettera)
+                }
             }
             termAdapter.updateList(termini)
         }

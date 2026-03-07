@@ -2,11 +2,15 @@ package com.pv.scaralina.ui.dialogs
 
 import PunteggiAdapter
 import android.content.Context
+import android.graphics.Typeface
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -40,12 +44,21 @@ class PunteggiDialogFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+        val headerContainer = view.findViewById<LinearLayout>(R.id.headerGiocatori)
+
+        Partita.giocatori.forEach { giocatore ->
+            val tv = TextView(requireContext()).apply {
+                text = giocatore.nome
+                textSize = 16f
+                gravity = Gravity.CENTER
+                setTypeface(null, Typeface.BOLD)
+                layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
+            }
+            headerContainer.addView(tv)
+        }
+
         val rv = view.findViewById<RecyclerView>(R.id.rvPunteggi)
-        rv.layoutManager = LinearLayoutManager(
-            requireContext(),
-            LinearLayoutManager.HORIZONTAL,
-            false
-        )
+        rv.layoutManager = LinearLayoutManager(requireContext())
 
         val colonne = mutableListOf<ColonnaPunteggi>()
 

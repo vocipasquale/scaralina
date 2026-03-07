@@ -25,6 +25,15 @@
                 android:gravity="center"
                 android:layout_marginBottom="16dp"/>
 
+        <!-- intestazione giocatori -->
+        <LinearLayout
+                android:id="@+id/headerGiocatori"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginBottom="8dp"/>
+
         <!-- ================= LISTA PUNTEGGI ================= -->
         <!-- OCCUPA TUTTO LO SPAZIO DISPONIBILE -->
         <androidx.recyclerview.widget.RecyclerView

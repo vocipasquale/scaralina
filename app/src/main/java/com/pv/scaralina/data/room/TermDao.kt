@@ -26,4 +26,11 @@ interface TermDao {
     ORDER BY parola ASC
     """)
     fun getByIniziale(iniziale: String): List<TermEntity>
+
+    @Query("""
+    SELECT * FROM termini
+    WHERE parola LIKE '%'|| :lettera || '%'
+    ORDER BY parola ASC
+    """)
+    fun getContains(lettera: String): List<TermEntity>
 }

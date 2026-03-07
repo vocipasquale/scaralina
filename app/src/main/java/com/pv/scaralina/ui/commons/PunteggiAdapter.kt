@@ -1,92 +1,89 @@
-import android.graphics.Typeface
 import android.text.InputType
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.pv.scaralina.R
 import com.pv.scaralina.data.ColonnaPunteggi
-import com.pv.scaralina.data.Giocatore
-import com.pv.scaralina.data.Partita
 
 class PunteggiAdapter(
     private val colonne: List<ColonnaPunteggi>
-) : RecyclerView.Adapter<PunteggiAdapter.ColonnaViewHolder>() {
+) : RecyclerView.Adapter<PunteggiAdapter.RigaViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ColonnaViewHolder {
+    // numero righe = numero mani
+    override fun getItemCount(): Int = colonne.firstOrNull()?.valori?.size ?: 0
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RigaViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_colonna_punteggi, parent, false)
-        return ColonnaViewHolder(view)
+            .inflate(R.layout.item_riga_punteggi, parent, false)
+        return RigaViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ColonnaViewHolder, position: Int) {
-        holder.bind(colonne[position])
+    override fun onBindViewHolder(holder: RigaViewHolder, position: Int) {
+        holder.bind(colonne, position)
     }
 
-    override fun getItemCount(): Int = colonne.size
+    class RigaViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-    class ColonnaViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val container = view.findViewById<LinearLayout>(R.id.containerColonna)
+        private val rowContainer = view.findViewById<LinearLayout>(R.id.rowContainer)
 
-        fun bind(colonna: ColonnaPunteggi) {
-            container.removeAllViews()
+        fun bind(colonne: List<ColonnaPunteggi>, rowIndex: Int) {
 
-            // HEADER
-            container.addView(creaHeader(colonna.header))
+            rowContainer.removeAllViews()
 
-            // CELLE
-            colonna.valori.forEachIndexed { rowIndex, valore ->
-                if (colonna.giocatore == null) {
-                    // colonna indice → solo testo
-                    container.addView(creaTextView(valore?.toString() ?: ""))
-                } else {
-                    // colonna giocatore → EditText
-                    container.addView(
-                        creaEditText(
-                            valore,
-                            colonna,
-                            rowIndex
-                        )
-                    )
-                }
+            colonne.forEach { colonna ->
+
+                val cella =
+                    if (colonna.giocatore == null) {
+                        creaTextView(colonna.valori[rowIndex]?.toString() ?: "")
+                    } else {
+                        creaEditText(colonna, rowIndex)
+                    }
+
+                rowContainer.addView(cella)
             }
         }
 
-        private fun creaHeader(text: String): TextView =
-            TextView(container.context).apply {
-                this.text = text
-                gravity = Gravity.CENTER
-                textSize = 16f
-                setTypeface(null, Typeface.BOLD)
-            }
-
         private fun creaTextView(text: String): TextView =
-            TextView(container.context).apply {
+            TextView(itemView.context).apply {
                 this.text = text
                 gravity = Gravity.CENTER
                 textSize = 14f
+                layoutParams = LinearLayout.LayoutParams(
+                    0,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    1f
+                )
             }
 
         private fun creaEditText(
-            valore: Int?,
             colonna: ColonnaPunteggi,
             rowIndex: Int
         ): EditText =
-            EditText(container.context).apply {
-                setText(valore?.toString() ?: "")
+            EditText(itemView.context).apply {
+
+                setText(colonna.valori[rowIndex]?.toString() ?: "")
                 gravity = Gravity.CENTER
                 inputType = InputType.TYPE_CLASS_NUMBER
                 textSize = 14f
 
+                layoutParams = LinearLayout.LayoutParams(
+                    0,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    1f
+                )
+
                 setOnFocusChangeListener { _, hasFocus ->
                     if (!hasFocus) {
+
                         val nuovoValore = text.toString().toIntOrNull()
+
                         colonna.valori[rowIndex] = nuovoValore
+
                         nuovoValore?.let {
                             colonna.giocatore
                                 ?.getPunteggi()
