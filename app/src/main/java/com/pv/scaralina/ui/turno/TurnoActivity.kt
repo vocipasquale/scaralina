@@ -64,7 +64,7 @@ class TurnoActivity : AppCompatActivity(),
         btnCercaParola = findViewById(R.id.btnCercaParola)
         btnChiudiPartita = findViewById(R.id.btnChiudiPartita)
         btnCambiaTurno = findViewById(R.id.btnCambiaTurno)
-        val gdPunteggio = findViewById<GridLayout>(R.id.gdPunteggio)
+        gdPunteggio = findViewById(R.id.gdPunteggio)
 
         gdPunteggio.setOnClickListener{
             val dialog = PunteggiDialogFragment()
@@ -86,9 +86,16 @@ class TurnoActivity : AppCompatActivity(),
         }
         btnCambiaTurno.setOnClickListener { showCambiaTurnoDialog() }
 
-        tvGiocatore.text = Partita.getGiocatoreCorrente().nome
-
         avviaTurno()
+    }
+
+    private fun aggiornaGiocatoreCorrente() {
+        tvGiocatore.text = Partita.getGiocatoreCorrente().nome
+    }
+
+    private fun passaAlGiocatoreSuccessivo() {
+        Partita.passaGiocatoreSuccessivo()
+        aggiornaGiocatoreCorrente()
     }
 
     override fun onPunteggiChanged() {
@@ -120,32 +127,8 @@ class TurnoActivity : AppCompatActivity(),
         }
     }
     private fun avviaTurno() {
-
-        //mostra punteggio corrente dei giocatori
-//        val numGiocatori = Partita.giocatori.size
-//        for (i in 0..numGiocatori - 1) {
-//            if (i == 0) {
-//                tvGiocatorePunteggio1.text = Partita.giocatori[i].nome + "\n" + Partita.giocatori[i].getpunteggioTotale()
-//                tvGiocatorePunteggio1.visibility = View.VISIBLE
-//            }
-//
-//            if (i == 1) {
-//                tvGiocatorePunteggio2.text = Partita.giocatori[i].nome + "\n" + Partita.giocatori[i].getpunteggioTotale()
-//                tvGiocatorePunteggio2.visibility = View.VISIBLE
-//            }
-//
-//            if (i == 2) {
-//                tvGiocatorePunteggio3.text = Partita.giocatori[i].nome + "\n" + Partita.giocatori[i].getpunteggioTotale()
-//                tvGiocatorePunteggio3.visibility = View.VISIBLE
-//            }
-//
-//            if (i == 3) {
-//                tvGiocatorePunteggio4.text = Partita.giocatori[i].nome + "\n" + Partita.giocatori[i].getpunteggioTotale()
-//                tvGiocatorePunteggio4.visibility = View.VISIBLE
-//            }
-//        }
+        aggiornaGiocatoreCorrente()
         aggiornaPunteggiUI()
-
 
         if (Partita.timerAbilitato) {
             selectedMinutes = Partita.durataTimer
@@ -284,10 +267,10 @@ class TurnoActivity : AppCompatActivity(),
         editTextPunteggio.filters = arrayOf(InputFilter { source, start, end, dest, dstart, dend ->
             for (i in start until end) {
                 if (!Character.isDigit(source[i])) {
-                    return@InputFilter "" // Ritorna una stringa vuota se non è un numero
+                    return@InputFilter "" // stringa vuota se non è un numero
                 }
             }
-            null // Permetti l'input
+            null
         })
 
         val btnAdd = dialog.findViewById<ImageButton>(R.id.btnAdd)
