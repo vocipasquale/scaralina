@@ -126,6 +126,17 @@ class TurnoActivity : AppCompatActivity(),
             tvGiocatorePunteggio4.visibility = View.VISIBLE
         }
     }
+
+    private fun aggiornaTurno() {
+        passaAlGiocatoreSuccessivo()
+        aggiornaPunteggiUI()
+
+        if (Partita.timerAbilitato) {
+            resetTimer()
+            startTimer()
+        }
+    }
+
     private fun avviaTurno() {
         aggiornaGiocatoreCorrente()
         aggiornaPunteggiUI()
@@ -248,10 +259,7 @@ class TurnoActivity : AppCompatActivity(),
             //Partita.aggiornaPunteggio(Partita.getGiocatoreCorrente(), punteggio)
             Partita.getGiocatoreCorrente().aggiungiPunteggio(punteggio)
 
-            Partita.passaGiocatoreSuccessivo()
-            timer?.cancel()
-            finish()
-            startActivity(Intent(this, TurnoActivity::class.java))
+            aggiornaTurno()
         }
     }
 
