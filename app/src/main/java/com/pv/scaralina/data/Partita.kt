@@ -30,14 +30,11 @@ object Partita {
         }
     }
 
-    fun avvia() {
-        Log.d("avvia", "avvia")
-    }
-
     fun reset() {
         _giocatori.clear() // Pulisce la lista dei giocatori
         timerAbilitato = false // Resetta lo stato del timer
         durataTimer = 0 // Resetta la durata del timer
+        idxGiocatoreCorr = 0
     }
 
 }

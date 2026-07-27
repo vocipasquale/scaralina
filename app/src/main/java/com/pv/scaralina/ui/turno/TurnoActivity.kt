@@ -1,5 +1,7 @@
 package com.pv.scaralina.ui.turno
 
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.PorterDuff
@@ -9,13 +11,13 @@ import com.pv.scaralina.R
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.InputFilter
-import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.GridLayout
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.pv.scaralina.data.Giocatore
@@ -23,6 +25,7 @@ import com.pv.scaralina.data.Partita
 import com.pv.scaralina.ui.chiusura.ChiusuraActivity
 import com.pv.scaralina.ui.commons.CercaParolaDialogFragment
 import com.pv.scaralina.ui.dialogs.PunteggiDialogFragment
+import com.pv.scaralina.ui.main.MainActivity
 
 
 class TurnoActivity : AppCompatActivity(),
@@ -51,6 +54,31 @@ class TurnoActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_turno)
 
+        initViews();
+        initListeners()
+
+        avviaTurno()
+
+        onBackPressedDispatcher.addCallback(this) {
+            showAbbandonaPartitaDialog()
+        }
+    }
+
+    private fun showAbbandonaPartitaDialog() {
+
+        AlertDialog.Builder(this)
+            .setTitle("Partita in corso!")
+            .setMessage("Vuoi davvero abbandonare la partita?")
+            .setNegativeButton("No", null)
+            .setPositiveButton("Si") { _, _ ->
+                Partita.reset()
+                setResult(RESULT_OK)
+                finish()
+            }
+            .show()
+    }
+
+    private fun initViews(){
         tvGiocatorePunteggio1 = findViewById(R.id.tvGiocatorePunteggio1)
         tvGiocatorePunteggio2 = findViewById(R.id.tvGiocatorePunteggio2)
         tvGiocatorePunteggio3 = findViewById(R.id.tvGiocatorePunteggio3)
@@ -64,8 +92,10 @@ class TurnoActivity : AppCompatActivity(),
         btnCercaParola = findViewById(R.id.btnCercaParola)
         btnChiudiPartita = findViewById(R.id.btnChiudiPartita)
         btnCambiaTurno = findViewById(R.id.btnCambiaTurno)
-        val gdPunteggio = findViewById<GridLayout>(R.id.gdPunteggio)
+        gdPunteggio = findViewById(R.id.gdPunteggio)
+    }
 
+    private fun initListeners() {
         gdPunteggio.setOnClickListener{
             val dialog = PunteggiDialogFragment()
             dialog.show(supportFragmentManager, "PunteggiDialog")
@@ -85,10 +115,15 @@ class TurnoActivity : AppCompatActivity(),
                 Partita.giocatori.filter { it != Partita.getGiocatoreCorrente() })
         }
         btnCambiaTurno.setOnClickListener { showCambiaTurnoDialog() }
+    }
 
+    private fun aggiornaGiocatoreCorrente() {
         tvGiocatore.text = Partita.getGiocatoreCorrente().nome
+    }
 
-        avviaTurno()
+    private fun passaAlGiocatoreSuccessivo() {
+        Partita.passaGiocatoreSuccessivo()
+        aggiornaGiocatoreCorrente()
     }
 
     override fun onPunteggiChanged() {
@@ -119,33 +154,20 @@ class TurnoActivity : AppCompatActivity(),
             tvGiocatorePunteggio4.visibility = View.VISIBLE
         }
     }
-    private fun avviaTurno() {
 
-        //mostra punteggio corrente dei giocatori
-//        val numGiocatori = Partita.giocatori.size
-//        for (i in 0..numGiocatori - 1) {
-//            if (i == 0) {
-//                tvGiocatorePunteggio1.text = Partita.giocatori[i].nome + "\n" + Partita.giocatori[i].getpunteggioTotale()
-//                tvGiocatorePunteggio1.visibility = View.VISIBLE
-//            }
-//
-//            if (i == 1) {
-//                tvGiocatorePunteggio2.text = Partita.giocatori[i].nome + "\n" + Partita.giocatori[i].getpunteggioTotale()
-//                tvGiocatorePunteggio2.visibility = View.VISIBLE
-//            }
-//
-//            if (i == 2) {
-//                tvGiocatorePunteggio3.text = Partita.giocatori[i].nome + "\n" + Partita.giocatori[i].getpunteggioTotale()
-//                tvGiocatorePunteggio3.visibility = View.VISIBLE
-//            }
-//
-//            if (i == 3) {
-//                tvGiocatorePunteggio4.text = Partita.giocatori[i].nome + "\n" + Partita.giocatori[i].getpunteggioTotale()
-//                tvGiocatorePunteggio4.visibility = View.VISIBLE
-//            }
-//        }
+    private fun aggiornaTurno() {
+        passaAlGiocatoreSuccessivo()
         aggiornaPunteggiUI()
 
+        if (Partita.timerAbilitato) {
+            resetTimer()
+            startTimer()
+        }
+    }
+
+    private fun avviaTurno() {
+        aggiornaGiocatoreCorrente()
+        aggiornaPunteggiUI()
 
         if (Partita.timerAbilitato) {
             selectedMinutes = Partita.durataTimer
@@ -265,10 +287,7 @@ class TurnoActivity : AppCompatActivity(),
             //Partita.aggiornaPunteggio(Partita.getGiocatoreCorrente(), punteggio)
             Partita.getGiocatoreCorrente().aggiungiPunteggio(punteggio)
 
-            Partita.passaGiocatoreSuccessivo()
-            timer?.cancel()
-            finish()
-            startActivity(Intent(this, TurnoActivity::class.java))
+            aggiornaTurno()
         }
     }
 
@@ -284,10 +303,10 @@ class TurnoActivity : AppCompatActivity(),
         editTextPunteggio.filters = arrayOf(InputFilter { source, start, end, dest, dstart, dend ->
             for (i in start until end) {
                 if (!Character.isDigit(source[i])) {
-                    return@InputFilter "" // Ritorna una stringa vuota se non è un numero
+                    return@InputFilter "" // stringa vuota se non è un numero
                 }
             }
-            null // Permetti l'input
+            null
         })
 
         val btnAdd = dialog.findViewById<ImageButton>(R.id.btnAdd)
