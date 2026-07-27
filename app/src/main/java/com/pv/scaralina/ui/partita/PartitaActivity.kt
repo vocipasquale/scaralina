@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.pv.scaralina.data.Giocatore
 import com.pv.scaralina.data.Partita
 import com.pv.scaralina.ui.turno.TurnoActivity
+import androidx.activity.result.contract.ActivityResultContracts
 
 
 class PartitaActivity : AppCompatActivity() {
@@ -23,6 +24,12 @@ class PartitaActivity : AppCompatActivity() {
     private lateinit var etGiocatore2: EditText
     private lateinit var etGiocatore3: EditText
     private lateinit var etGiocatore4: EditText
+    private val turnoLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                finish()
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +71,8 @@ class PartitaActivity : AppCompatActivity() {
         }
 
         btnStart.setOnClickListener {
+            Partita.reset()
+
             if(checkPartita()){
                 var nuovoGiocatore: Giocatore
 
@@ -94,7 +103,9 @@ class PartitaActivity : AppCompatActivity() {
                     Partita.timerAbilitato = true
                     Partita.durataTimer = tvDurata.text?.toString()?.toInt() ?: 0
                 }
-                startActivity(Intent(this, TurnoActivity::class.java))
+
+                //startActivity(Intent(this, TurnoActivity::class.java))
+                turnoLauncher.launch(Intent(this, TurnoActivity::class.java))
             }
         }
 

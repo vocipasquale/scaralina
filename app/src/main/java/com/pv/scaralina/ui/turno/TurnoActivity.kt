@@ -1,5 +1,7 @@
 package com.pv.scaralina.ui.turno
 
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.PorterDuff
@@ -9,13 +11,13 @@ import com.pv.scaralina.R
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.InputFilter
-import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.GridLayout
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.pv.scaralina.data.Giocatore
@@ -23,6 +25,7 @@ import com.pv.scaralina.data.Partita
 import com.pv.scaralina.ui.chiusura.ChiusuraActivity
 import com.pv.scaralina.ui.commons.CercaParolaDialogFragment
 import com.pv.scaralina.ui.dialogs.PunteggiDialogFragment
+import com.pv.scaralina.ui.main.MainActivity
 
 
 class TurnoActivity : AppCompatActivity(),
@@ -51,6 +54,31 @@ class TurnoActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_turno)
 
+        initViews();
+        initListeners()
+
+        avviaTurno()
+
+        onBackPressedDispatcher.addCallback(this) {
+            showAbbandonaPartitaDialog()
+        }
+    }
+
+    private fun showAbbandonaPartitaDialog() {
+
+        AlertDialog.Builder(this)
+            .setTitle("Partita in corso!")
+            .setMessage("Vuoi davvero abbandonare la partita?")
+            .setNegativeButton("No", null)
+            .setPositiveButton("Si") { _, _ ->
+                Partita.reset()
+                setResult(RESULT_OK)
+                finish()
+            }
+            .show()
+    }
+
+    private fun initViews(){
         tvGiocatorePunteggio1 = findViewById(R.id.tvGiocatorePunteggio1)
         tvGiocatorePunteggio2 = findViewById(R.id.tvGiocatorePunteggio2)
         tvGiocatorePunteggio3 = findViewById(R.id.tvGiocatorePunteggio3)
@@ -65,7 +93,9 @@ class TurnoActivity : AppCompatActivity(),
         btnChiudiPartita = findViewById(R.id.btnChiudiPartita)
         btnCambiaTurno = findViewById(R.id.btnCambiaTurno)
         gdPunteggio = findViewById(R.id.gdPunteggio)
+    }
 
+    private fun initListeners() {
         gdPunteggio.setOnClickListener{
             val dialog = PunteggiDialogFragment()
             dialog.show(supportFragmentManager, "PunteggiDialog")
@@ -85,8 +115,6 @@ class TurnoActivity : AppCompatActivity(),
                 Partita.giocatori.filter { it != Partita.getGiocatoreCorrente() })
         }
         btnCambiaTurno.setOnClickListener { showCambiaTurnoDialog() }
-
-        avviaTurno()
     }
 
     private fun aggiornaGiocatoreCorrente() {
