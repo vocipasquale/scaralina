@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F5F5F5"
+        android:padding="16dp">
+
+    <!-- CONTENITORE PRINCIPALE -->
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        <!-- ================= HEADER ================= -->
+        <TextView
+                android:id="@+id/tvIntestazione"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Punteggi"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/purple_500"
+                android:gravity="center"
+                android:layout_marginBottom="16dp"/>
+
+        <!-- intestazione giocatori -->
+        <LinearLayout
+                android:id="@+id/headerGiocatori"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginBottom="8dp"/>
+
+        <!-- ================= LISTA PUNTEGGI ================= -->
+        <!-- OCCUPA TUTTO LO SPAZIO DISPONIBILE -->
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvPunteggi"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:overScrollMode="never"/>
+
+        <!-- ================= BARRA BASSA (SEMPRE VISIBILE) ================= -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="12dp">
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                <ImageButton
+                        android:id="@+id/btnClose"
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_close_24"
+                        app:tint="@color/purple_500"
+                        android:scaleType="fitCenter"
+                        android:contentDescription="Chiudi"/>
+
+                <TextView
+                        android:layout_width="96dp"
+                        android:layout_height="48dp"
+                        android:text="Chiudi"
+                        android:gravity="center"
+                        android:textSize="14sp"
+                        android:textColor="@color/purple_500"
+                        android:layout_marginTop="4dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

@@ -1,0 +1,244 @@
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F5F5F5">
+
+    <!-- ================= BLOCCO ALTO ================= -->
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center_horizontal"
+            android:layout_weight="2"
+            android:layout_marginTop="32dp">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Giocatori"
+                android:textSize="48dp"
+                android:textStyle="bold"
+                android:textColor="@color/purple_500"
+                android:layout_marginBottom="16dp"/>
+
+        <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:rowCount="2"
+                android:layout_marginBottom="16dp">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:textSize="24dp"
+                    android:layout_gravity="end|center_vertical"
+                    android:textColor="@color/purple_500"
+                    android:layout_marginEnd="8dp"/>
+
+            <EditText
+                    android:id="@+id/etGiocatore1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:hint="Nome Giocatore 1"
+                    android:textSize="24dp"
+                    android:textColor="@color/purple_500"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2"
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_marginEnd="8dp"
+                    android:textColor="@color/purple_500"
+                    android:textSize="24dp"/>
+
+            <EditText
+                    android:id="@+id/etGiocatore2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:hint="Nome Giocatore 2"
+                    android:textColor="@color/purple_500"
+                    android:textSize="24dp"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3"
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_marginEnd="8dp"
+                    android:textColor="@color/purple_500"
+                    android:textSize="24dp"/>
+
+            <EditText
+                    android:id="@+id/etGiocatore3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:hint="Nome Giocatore 3"
+                    android:textColor="@color/purple_500"
+                    android:textSize="24dp"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4"
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_marginEnd="8dp"
+                    android:textColor="@color/purple_500"
+                    android:textSize="24dp"/>
+
+            <EditText
+                    android:id="@+id/etGiocatore4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:hint="Nome Giocatore 4"
+                    android:textColor="@color/purple_500"
+                    android:textSize="24dp"/>
+
+        </GridLayout>
+
+    </LinearLayout>
+
+    <!-- ================= BLOCCO CENTRALE ================= -->
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="32dp">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Timer"
+                android:textSize="48dp"
+                android:textStyle="bold"
+                android:textColor="@color/purple_500"
+                android:layout_marginBottom="16dp"/>
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="16dp">
+
+            <CheckBox
+                    android:id="@+id/ckbTimer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:tint="@color/purple_500"/>
+
+            <SeekBar
+                    android:id="@+id/sbDurataTimer"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:max="5"
+                    android:progress="2"
+                    app:tint="@color/purple_500"/>
+
+              <TextView
+                    android:id="@+id/tvDurata"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text=""
+                    android:textSize="16sp"
+                    android:textColor="@color/black"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text=" min"
+                    android:textSize="18sp"
+                    android:textColor="@color/purple_500"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <!-- ================= BLOCCO BASSO ================= -->
+    <!-- Barra pulsanti -->
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="16dp">
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+
+            <ImageButton
+                    android:id="@+id/btnBack"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_back_24"
+                    app:tint="@color/purple_500"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="Indietro"/>
+            <TextView
+                    android:layout_width="96dp"
+                    android:layout_height="48dp"
+                    android:text="Indietro"
+                    android:textSize="18dp"
+                    android:gravity="center"
+                    android:textColor="@color/purple_500"/>
+        </LinearLayout>
+
+        <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+            <ImageButton
+                    android:id="@+id/btnStart"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_weight="1"
+                    android:layout_margin="8dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_play_24"
+                    app:tint="@color/purple_500"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="Aggiungi"/>
+            <TextView
+                    android:layout_width="96dp"
+                    android:layout_height="48dp"
+                    android:text="Avvia"
+                    android:textSize="18dp"
+                    android:gravity="center"
+                    android:textColor="@color/purple_500"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

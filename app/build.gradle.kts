@@ -13,8 +13,8 @@ android {
         minSdk = 21
         //noinspection EditedTargetSdkVersion
         targetSdk = 35
-        versionCode = 16
-        versionName = "16.0"
+        versionCode = 29
+        versionName = "29.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -40,6 +40,8 @@ android {
 
 dependencies {
 
+    implementation("nl.dionsegijn:konfetti-xml:2.0.4")
+
     // Versioni compatibili con compileSdk 34 e AGP 8.2.0
     implementation("androidx.core:core-ktx:1.10.1")
     implementation("androidx.appcompat:appcompat:1.7.0")
@@ -47,6 +49,7 @@ dependencies {
 
     // Room
     implementation("androidx.room:room-runtime:2.6.1")
+    implementation("androidx.compose.ui:ui-desktop:1.7.0")
     kapt("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
 

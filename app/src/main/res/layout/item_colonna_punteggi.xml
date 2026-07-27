@@ -1,0 +1,31 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/containerColonna"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:gravity="center_horizontal"
+              android:padding="8dp">
+
+    <!-- header giocatore -->
+    <TextView
+            android:id="@+id/tvHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:gravity="center"/>
+
+    <!-- lista punteggi scrollabile -->
+    <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:overScrollMode="never">
+
+        <LinearLayout
+                android:id="@+id/llPunteggi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"/>
+    </ScrollView>
+
+</LinearLayout>

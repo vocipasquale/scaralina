@@ -21,17 +21,29 @@
         <!-- MainActivity: schermata principale -->
         <activity
                 android:name=".ui.main.MainActivity"
-                android:exported="true">
+                android:exported="true"
+                android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <!-- AddWordActivity: schermata inserimento parola -->
         <activity
-                android:name=".ui.sigla.SiglaActivity"
-                android:exported="false"/>
+                android:name=".ui.partita.PartitaActivity"
+                android:exported="false"
+                android:screenOrientation="portrait"/>
+
+        <activity
+                android:name=".ui.turno.TurnoActivity"
+                android:exported="false"
+                android:screenOrientation="portrait"/>
+
+        <activity
+                android:name=".ui.chiusura.ChiusuraActivity"
+                android:exported="false"
+                android:screenOrientation="portrait"/>
+
 
     </application>
 
